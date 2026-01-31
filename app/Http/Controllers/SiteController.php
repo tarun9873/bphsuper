@@ -119,7 +119,7 @@ class SiteController extends Controller
 
         $file = $request->file('logo');
         $filename = time().'.'.$file->getClientOriginalExtension();
-        $file->storeAs('public/logos', $filename);
+        $file->move(public_path('storage/logos'), $filename);
 
         Site::create([
             'name' => $request->name,
@@ -158,7 +158,7 @@ class SiteController extends Controller
         if($request->hasFile('logo')){
             $file = $request->file('logo');
             $filename = time().'.'.$file->getClientOriginalExtension();
-            $file->storeAs('public/logos', $filename);
+            $file->move(public_path('storage/logos'), $filename);
             $site->logo = $filename;
         }
 
