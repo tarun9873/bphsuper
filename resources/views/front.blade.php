@@ -1218,7 +1218,7 @@
             
             // Autoplay configuration
             autoplay: {
-                delay: 4000, // 4 seconds delay between slides
+                delay: 2000, // 4 seconds delay between slides
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
             },
