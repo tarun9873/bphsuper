@@ -987,7 +987,7 @@
                     </button>
                 </div>
                 
-                <div class="demo-id">Yourrr Trusted Hub for iGaming Masters, Super Masters & White-Label Solutions</div>
+                <div class="demo-id">Your Trusted Hub for iGaming Masters, Super Masters & White-Label Solutions</div>
             </div>
         </header>
 
