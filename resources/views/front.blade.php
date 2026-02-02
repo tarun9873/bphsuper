@@ -178,14 +178,15 @@
         }
         
         .feature-box {
-            flex: 1;
-            min-width: 150px;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+           flex: 1;
+    min-width: 150px;
+    background: #028115;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* backdrop-filter: blur(10px); */
+    /* color: #000; */
         }
         
         .feature-title {
@@ -968,6 +969,197 @@
             color: #aaa;
             font-size: 14px;
         }
+
+        /* =============================
+   SITE CARD DESIGN
+============================= */
+
+.site-items-container{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.site-card{
+    display:flex;
+    background:#041b33;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* LEFT SIDE */
+
+.site-left{
+    width:30%;
+    background:#0b2d4d;
+    padding:12px;
+    text-align:center;
+}
+
+.site-logo-box{
+    width:60px;
+    height:60px;
+    margin:20px auto 8px;
+    background:#000;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.site-logo-box img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.site-name{
+    color:#fff;
+    font-size:15px;
+    font-weight:700;
+}
+
+/* RIGHT SIDE */
+
+.site-right{
+    width:70%;
+    background:#f5b000;
+    padding:12px;
+    text-align:center;
+}
+
+.share-title{
+    font-size:14px;
+    font-weight:700;
+    color:#000;
+}
+
+.share-value{
+    font-size:18px;
+    font-weight:800;
+    margin:5px 0 8px;
+    color:#000;
+}
+
+.domain-btn{
+    display:inline-block;
+    background:#000;
+    color:#fff;
+    padding:6px 14px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.domain-btn:hover{
+    background:#222;
+}
+
+/* ===== ICON + BUTTON UPGRADE ===== */
+
+.share-icons{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-bottom:6px;
+}
+
+.coin-icon{
+    width:22px;
+    height:22px;
+}
+
+.whatsapp-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    background:#25D366;
+    color:#fff;
+    padding:6px 14px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:600;
+    text-decoration:none;
+    margin-top:6px;
+}
+
+.whatsapp-btn i{
+    font-size:14px;
+}
+
+.whatsapp-btn:hover{
+    background:#1ebe5d;
+}
+
+/* ===== GRID LAYOUT ===== */
+
+.site-items-container{
+    display:grid;
+    grid-template-columns: 1fr;
+    gap:15px;
+}
+
+/* Desktop 2 cards */
+@media (min-width:768px){
+    .site-items-container{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+/* ===== COIN ICON SVG ===== */
+
+.coin-svg{
+    width:20px;
+    height:20px;
+    fill:#000;
+}
+
+.share-icons{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin:6px 0;
+}
+
+/* WhatsApp Button */
+
+.whatsapp-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    background:#25D366;
+    color:#fff;
+    padding:6px 14px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:600;
+    text-decoration:none;
+    margin-top:6px;
+}
+
+.whatsapp-btn i{
+    font-size:14px;
+}
+
+.whatsapp-btn:hover{
+    background:#1ebe5d;
+}
+
+.share-flex{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;   /* ICON aur VALUE ka gap */
+}
+
+.share-flex span{
+    font-size:20px;
+    font-weight:800;
+}
+
+
     </style>
 </head>
 <body>
@@ -1128,54 +1320,91 @@
                 </section>
 
                 <section class="site-list">
-                    <div class="results-info">
-                        <i class="fas fa-info-circle"></i>
-                        Showing <span id="filteredCount">{{ $sites->count() }}</span> of <span id="totalCount">{{ $sites->count() }}</span> sites
+
+    <div class="results-info">
+        <i class="fas fa-info-circle"></i>
+        Showing 
+        <span id="filteredCount">{{ $sites->count() }}</span> of 
+        <span id="totalCount">{{ $sites->count() }}</span> sites
+    </div>
+
+    <div class="site-items-container" id="sitesContainer">
+
+        @if($sites->count() > 0)
+
+            @foreach($sites as $site)
+
+            <div class="site-card" data-category="{{ $site->category }}">
+
+                <!-- LEFT SIDE -->
+                <div class="site-left">
+                    <div class="site-logo-box">
+                        <img src="{{ asset('storage/logos/' . $site->logo) }}"
+                             alt="{{ $site->name }}"
+                             onerror="handleLogoError(this, '{{ substr($site->name,0,1) }}')">
                     </div>
-                    
-                    <div class="site-items-container" id="sitesContainer">
-                        @if($sites->count() > 0)
-                            @foreach($sites as $site)
-                                <div class="site-item" data-category="{{ $site->category }}">
-                                    <div class="site-item-header">
-                                        <div class="site-logo">
-                                            <img src="{{ asset('storage/logos/' . $site->logo) }}" 
-                                                 alt="{{ $site->name }} Logo" 
-                                                 onerror="handleLogoError(this, '{{ substr($site->name, 0, 1) }}')">
-                                        </div>
-                                        <div class="site-info">
-                                            <div class="site-name-full">{{ $site->name }} 
-                                                @if($site->category)
-                                                    <span class="site-name-version">({{ $site->category }})</span>
-                                                @endif
-                                            </div>
-                                            @if($site->url)
-                                                @php
-                                                    $domain = parse_url($site->url, PHP_URL_HOST);
-                                                    $domain = str_replace(['www.', 'http://', 'https://'], '', $domain);
-                                                @endphp
-                                                <div class="site-domain">{{ $domain ?? $site->url }}</div>
-                                            @endif
-                                            <div class="site-price">Market Rate:- {{ (int)$site->market_percentage }}%</div>
-                                        </div>
-                                    </div>
-                                    <div class="button-row">
-                                        <a href="{{ $site->url }}" target="_blank" class="visit-btn">Visit Website</a>
-                                        <a href="https://walive.link/rustampanel" target="_blank" class="get-id-btn-site">
-                                            <i class="fas fa-id-card"></i> Get ID
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="no-sites-message">
-                                <i class="fas fa-search"></i>
-                                <h3>No Sites Available</h3>
-                                <p>Check back soon for new site additions!</p>
-                            </div>
+
+                    <div class="site-name">
+                        {{ $site->name }}
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE -->
+                <div class="site-right">
+
+                    <div class="share-title">
+
+                        @if($site->min_percentage > 0 && $site->market_percentage > 0)
+                            Minimum Sharing
+                        @elseif($site->min_percentage > 0)
+                            Minimum Sharing
+                        @elseif($site->market_percentage > 0)
+                            Maximum Sharing
                         @endif
+
                     </div>
-                </section>
+
+                    <div class="share-value">
+
+                        @if($site->min_percentage > 0 && $site->market_percentage > 0)
+                            {{ (int)$site->min_percentage }}% - {{ (int)$site->market_percentage }}%
+                        @elseif($site->min_percentage > 0)
+                            {{ (int)$site->min_percentage }}%
+                        @elseif($site->market_percentage > 0)
+                            {{ (int)$site->market_percentage }}%
+                        @endif
+
+                    </div>
+
+                    @php
+                        $domain = parse_url($site->url, PHP_URL_HOST);
+                        $domain = str_replace('www.', '', $domain);
+                    @endphp
+
+                    <a href="{{ $site->url }}" target="_blank" class="domain-btn">
+                        {{ $domain }}
+                    </a>
+
+                </div>
+
+            </div>
+
+            @endforeach
+
+        @else
+
+            <div class="no-sites-message">
+                <i class="fas fa-search"></i>
+                <h3>No Sites Available</h3>
+                <p>Check back soon for new site additions!</p>
+            </div>
+
+        @endif
+
+    </div>
+
+</section>
+
             </main>
         </div>
 
@@ -1255,7 +1484,8 @@
         }
     });
 
-    const allSites = {!! json_encode($sites) !!};
+    const allSites = JSON.parse('{!! addslashes(json_encode($sites)) !!}');
+
     
     const dropdownHeader = document.getElementById('dropdownHeader');
     const dropdownContent = document.getElementById('dropdownContent');
@@ -1422,65 +1652,103 @@
         totalCountElement.textContent = allSites.length;
     }
 
-    function renderSites(sites) {
-        sitesContainer.innerHTML = '';
-        
-        if (sites.length === 0) {
-            const noSitesMessage = document.createElement('div');
-            noSitesMessage.className = 'no-sites-message';
-            noSitesMessage.innerHTML = `
+   function renderSites(sites) {
+
+    sitesContainer.innerHTML = '';
+
+    if (sites.length === 0) {
+        sitesContainer.innerHTML = `
+            <div class="no-sites-message">
                 <i class="fas fa-search"></i>
                 <h3>No Sites Available</h3>
                 <p>No sites found for "${selectedSiteType}"</p>
-            `;
-            sitesContainer.appendChild(noSitesMessage);
-            return;
-        }
-        
-        sites.forEach(site => {
-            const siteItem = document.createElement('div');
-            siteItem.className = 'site-item';
-            siteItem.setAttribute('data-category', site.category);
-            
-            let domain = site.url;
-            try {
-                const url = new URL(site.url);
-                domain = url.hostname.replace('www.', '');
-            } catch (e) {
-                // If URL parsing fails, use the original URL
-            }
-            
-            const firstLetter = site.name.charAt(0).toUpperCase();
-            
-            // Format market percentage as integer without decimals
-            const marketPercentage = parseInt(site.market_percentage);
-            
-            siteItem.innerHTML = `
-                <div class="site-item-header">
-                    <div class="site-logo">
-                        <img src="{{ asset('storage/logos') }}/${site.logo}" 
-                             alt="${site.name} Logo" 
-                             onerror="handleLogoError(this, '${firstLetter}')">
-                    </div>
-                    <div class="site-info">
-                        <div class="site-name-full">${site.name} 
-                            <span class="site-name-version">(${site.category})</span>
-                        </div>
-                        <div class="site-domain">${domain}</div>
-                        <div class="site-price">Market Rate:- ${marketPercentage}%</div>
-                    </div>
-                </div>
-                <div class="button-row">
-                    <a href="${site.url}" target="_blank" class="visit-btn">Visit Website</a>
-                    <a href="https://walive.link/rustampanel" target="_blank" class="get-id-btn-site">
-                        <i class="fas fa-id-card"></i> Get Panel
-                    </a>
-                </div>
-            `;
-            
-            sitesContainer.appendChild(siteItem);
-        });
+            </div>
+        `;
+        return;
     }
+
+    sites.forEach(site => {
+
+        let domain = site.url;
+        try {
+            const url = new URL(site.url);
+            domain = url.hostname.replace('www.', '');
+        } catch (e) {}
+
+        const firstLetter = site.name.charAt(0).toUpperCase();
+
+        const maxPercent = Number(site.market_percentage) || 0;
+        const minPercent = Number(site.min_percentage) || 0;
+
+        let titleText = '';
+        let valueText = '';
+
+        if (minPercent > 0 && maxPercent > 0) {
+            titleText = 'Minimum Sharing';
+            valueText = `${minPercent}% - ${maxPercent}%`;
+        }
+        else if (minPercent > 0) {
+            titleText = 'Minimum Sharing';
+            valueText = `${minPercent}%`;
+        }
+        else if (maxPercent > 0) {
+            titleText = 'Maximum Sharing';
+            valueText = `${maxPercent}%`;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'site-card';
+        card.setAttribute('data-category', site.category);
+
+        card.innerHTML = `
+            <div class="site-left">
+                <div class="site-logo-box">
+                    <img src="{{ asset('storage/logos') }}/${site.logo}"
+                         onerror="handleLogoError(this,'${firstLetter}')">
+                </div>
+                <div class="site-name">${site.name}</div>
+            </div>
+
+            <div class="site-right">
+
+                <div class="share-title">${titleText}</div>
+
+                
+
+              <div class="share-value share-flex">
+
+    <svg fill="#000000" width="20" height="20" viewBox="0 0 36 36">
+        <path d="M17.91,18.28c8.08,0,14.66-1.74,15.09-3.94V8.59c-.43,2.2-7,3.94-15.09,3.94A39.4,39.4,0,0,1,6.25,11V9a39.4,39.4,0,0,0,11.66,1.51C26,10.53,32.52,8.79,33,6.61h0C32.8,3.2,23.52,2.28,18,2.28S3,3.21,3,6.71V29.29c0,3.49,9.43,4.43,15,4.43s15-.93,15-4.43V24.09C32.57,26.28,26,28,17.91,28A39.4,39.4,0,0,1,6.25,26.52v-2A39.4,39.4,0,0,0,17.91,26C26,26,32.57,24.28,33,22.09V16.34c-.43,2.2-7,3.94-15.09,3.94A39.4,39.4,0,0,1,6.25,18.77v-2A39.4,39.4,0,0,0,17.91,18.28Z"/>
+    </svg>
+
+    <span>${valueText}</span>
+
+    <svg fill="#000000" width="20" height="20" viewBox="0 0 36 36">
+        <path d="M17.91,18.28c8.08,0,14.66-1.74,15.09-3.94V8.59c-.43,2.2-7,3.94-15.09,3.94A39.4,39.4,0,0,1,6.25,11V9a39.4,39.4,0,0,0,11.66,1.51C26,10.53,32.52,8.79,33,6.61h0C32.8,3.2,23.52,2.28,18,2.28S3,3.21,3,6.71V29.29c0,3.49,9.43,4.43,15,4.43s15-.93,15-4.43V24.09C32.57,26.28,26,28,17.91,28A39.4,39.4,0,0,1,6.25,26.52v-2A39.4,39.4,0,0,0,17.91,26C26,26,32.57,24.28,33,22.09V16.34c-.43,2.2-7,3.94-15.09,3.94A39.4,39.4,0,0,1,6.25,18.77v-2A39.4,39.4,0,0,0,17.91,18.28Z"/>
+    </svg>
+
+</div>
+
+
+                <a href="${site.url}" target="_blank" class="domain-btn">
+                    ${domain}
+                </a>
+
+                <br>
+
+                <a href="https://walive.link/rustampanel" 
+                   target="_blank" 
+                   class="whatsapp-btn">
+                    <i class="fab fa-whatsapp"></i> Get ID
+                </a>
+
+            </div>
+        `;
+
+        sitesContainer.appendChild(card);
+    });
+}
+
 
     function updateSelectedTypeInURL(typeName) {
         const url = new URL(window.location);

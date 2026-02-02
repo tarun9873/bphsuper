@@ -5,7 +5,6 @@
 @section('content')
     @include('admin.sidebar')
 
-
     <!-- Main Content -->
     <div class="lg:ml-64 transition-all duration-300">
         <!-- Top Bar - Mobile Responsive -->
@@ -137,7 +136,10 @@
                                 <tr>
                                     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Site</th>
                                     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Category</th>
-                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Market %</th>
+                                    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+Min / Max %
+</th>
+
                                     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                                     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                                 </tr>
@@ -166,15 +168,23 @@
                                             {{ $site->category }}
                                         </span>
                                     </td>
-                                    <td class="py-4 px-6">
-                                        <div class="flex items-center">
-                                            <span class="font-bold text-gray-800 mr-2">{{ $site->market_percentage }}%</span>
-                                            <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
-                                                <div class="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full" 
-                                                     style="width: {{ min($site->market_percentage, 100) }}%"></div>
-                                            </div>
-                                        </div>
-                                    </td>
+                                  <td class="py-4 px-6">
+    <div class="flex flex-col">
+        <span class="font-semibold text-gray-800">
+            Min: {{ $site->min_percentage ?? 0 }}%
+        </span>
+
+        <span class="font-semibold text-gray-800">
+            Max: {{ $site->market_percentage ?? 0 }}%
+        </span>
+
+        <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
+            <div class="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full" 
+                 style="width: {{ min($site->market_percentage ?? 0, 100) }}%"></div>
+        </div>
+    </div>
+</td>
+
                                     <td class="py-4 px-6">
                                         <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                                             <i class="fas fa-circle text-xs mr-1"></i> Active
@@ -227,7 +237,8 @@
                                     </div>
                                 </div>
                                 <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                    {{ $site->market_percentage }}%
+                                    Min: {{ $site->min_percentage }}% | Max: {{ $site->market_percentage }}%
+
                                 </span>
                             </div>
                             
@@ -378,20 +389,25 @@
                                 </div>
                             </div>
 
-                            <!-- Market Percentage -->
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    Market Percentage <span class="text-red-500">*</span>
-                                </label>
-                                <div class="relative">
-                                    <input type="number" name="market_percentage" required
-                                           class="pr-12 pl-4 py-2 lg:py-3 w-full border border-gray-200 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                                           placeholder="0.00" min="0" max="100" step="0.01">
-                                    <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-500">%</span>
-                                    </div>
-                                </div>
-                            </div>
+                           <!-- Max Percentage -->
+<div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+        Max Percentage
+    </label>
+    <input type="number" name="market_percentage"
+           class="w-full border rounded-lg px-4 py-2"
+           min="0" max="100" step="0.01">
+</div>
+
+<!-- Min Percentage -->
+<div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+        Min Percentage
+    </label>
+    <input type="number" name="min_percentage"
+           class="w-full border rounded-lg px-4 py-2"
+           min="0" max="100" step="0.01">
+</div>
 
                             <!-- Category -->
                             <div>

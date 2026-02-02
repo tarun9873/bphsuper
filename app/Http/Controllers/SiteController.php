@@ -22,17 +22,17 @@ class SiteController extends Controller
             ->distinct()
             ->orderBy('category')
             ->pluck('category');
-        
+
         // Calculate counts for each category
         $siteTypesWithCount = [];
-        
+
         // Add "All Site" option
         $siteTypesWithCount[] = [
             'name' => 'All Site',
             'count' => $sites->count(),
             'icon' => 'fas fa-globe'
         ];
-        
+
         // Add other categories with counts
         foreach ($categories as $category) {
             $count = Site::where('category', $category)->count();
@@ -42,10 +42,10 @@ class SiteController extends Controller
                 'icon' => $this->getCategoryIcon($category)
             ];
         }
-        
+
         return view('front', compact('sites', 'categories', 'siteTypesWithCount'));
     }
-    
+
     // Helper function to get category icon
     private function getCategoryIcon($categoryName)
     {
@@ -59,17 +59,17 @@ class SiteController extends Controller
             'Dream 555 Type' => 'fas fa-cloud',
             'Exch247 Type' => 'fas fa-chart-line'
         ];
-        
+
         // Default icon
         $defaultIcon = 'fas fa-globe';
-        
+
         // Check if category exists in map, otherwise return default
         foreach ($iconMap as $key => $icon) {
             if (str_contains($categoryName, str_replace(' Type', '', $key)) || $categoryName === $key) {
                 return $icon;
             }
         }
-        
+
         return $defaultIcon;
     }
 
@@ -113,21 +113,23 @@ class SiteController extends Controller
             $category = $request->category;
         }
 
-        if(!$request->hasFile('logo')){
-            return back()->with('error','Upload Logo');
+        if (!$request->hasFile('logo')) {
+            return back()->with('error', 'Upload Logo');
         }
 
         $file = $request->file('logo');
-        $filename = time().'.'.$file->getClientOriginalExtension();
+        $filename = time() . '.' . $file->getClientOriginalExtension();
         $file->move(public_path('storage/logos'), $filename);
 
         Site::create([
             'name' => $request->name,
             'logo' => $filename,
             'url' => $request->url,
-            'market_percentage' => $request->market_percentage,
+            'market_percentage' => $request->market_percentage ?? 0, // MAX
+            'min_percentage' => $request->min_percentage ?? 0,       // MIN
             'category' => $category
         ]);
+
 
         return back()->with('success', 'Site added successfully!');
     }
@@ -140,10 +142,12 @@ class SiteController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'url' => 'required|url',
-            'market_percentage' => 'required|numeric|min:0|max:100',
+            'min_percentage' => 'nullable|numeric|min:0|max:100',
+            'market_percentage' => 'nullable|numeric|min:0|max:100',
             'category' => 'required',
-            'logo' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
 
         $site = Site::findOrFail($id);
 
@@ -155,20 +159,23 @@ class SiteController extends Controller
         }
 
         // Handle logo update
-        if($request->hasFile('logo')){
+        if ($request->hasFile('logo')) {
             $file = $request->file('logo');
-            $filename = time().'.'.$file->getClientOriginalExtension();
+            $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('storage/logos'), $filename);
             $site->logo = $filename;
         }
 
         // Update all fields
-        $site->update([
+        $site->fill([
             'name' => $request->name,
             'url' => $request->url,
-            'market_percentage' => $request->market_percentage,
+            'market_percentage' => $request->market_percentage ?? 0,
+            'min_percentage' => $request->min_percentage ?? 0,
             'category' => $category
-        ]);
+        ])->save();
+
+
 
         return redirect('/admin')->with('success', 'Site updated successfully!');
     }
@@ -192,29 +199,29 @@ class SiteController extends Controller
     }
 
     public function storeCategory(Request $request)
-{
-    $request->validate([
-        'name' => 'required|max:255'
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|max:255'
+        ]);
 
-    // Already exists check
-    $exists = Site::where('category', $request->name)->exists();
+        // Already exists check
+        $exists = Site::where('category', $request->name)->exists();
 
-    if ($exists) {
-        return back()->with('error', 'Category already exists!');
+        if ($exists) {
+            return back()->with('error', 'Category already exists!');
+        }
+
+        // Insert dummy site so category appears
+        Site::create([
+            'name' => 'temp-site',
+            'logo' => 'default.png',
+            'url' => 'https://example.com',
+            'market_percentage' => 0,
+            'category' => $request->name
+        ]);
+
+        return back()->with('success', 'Category added successfully!');
     }
-
-    // Insert dummy site so category appears
-    Site::create([
-        'name' => 'temp-site',
-        'logo' => 'default.png',
-        'url' => 'https://example.com',
-        'market_percentage' => 0,
-        'category' => $request->name
-    ]);
-
-    return back()->with('success', 'Category added successfully!');
-}
 
 
     public function updateCategory(Request $request)
@@ -239,7 +246,7 @@ class SiteController extends Controller
 
         // Check if category has any sites
         $siteCount = Site::where('category', $request->category)->count();
-        
+
         if ($siteCount > 0) {
             return back()->with('error', 'Cannot delete category with existing sites!');
         }

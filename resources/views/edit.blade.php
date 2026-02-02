@@ -264,23 +264,35 @@
             </div>
             
             <div class="form-group">
-                <label class="form-label">Market Percentage *</label>
-                <div class="percentage-input-group">
-                    <input type="number" 
-                           name="market_percentage" 
-                           class="form-input" 
-                           value="{{ old('market_percentage', $site->market_percentage) }}" 
-                           placeholder="Enter market percentage" 
-                           min="0" 
-                           max="100" 
-                           step="0.01" 
-                           required>
-                    <span class="percentage-symbol">%</span>
-                </div>
-                <small style="color: #718096; font-size: 13px; margin-top: 5px; display: block;">
-                    Enter percentage value (e.g., 5.5, 10, 15.25)
-                </small>
-            </div>
+    <label class="form-label">Minimum Percentage</label>
+    <div class="percentage-input-group">
+        <input type="number" 
+               name="min_percentage" 
+               class="form-input" 
+               value="{{ old('min_percentage', $site->min_percentage) }}" 
+               placeholder="Enter minimum percentage" 
+               min="0" 
+               max="100" 
+               step="0.01">
+        <span class="percentage-symbol">%</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="form-label">Maximum Percentage</label>
+    <div class="percentage-input-group">
+        <input type="number" 
+               name="market_percentage" 
+               class="form-input" 
+               value="{{ old('market_percentage', $site->market_percentage) }}" 
+               placeholder="Enter maximum percentage" 
+               min="0" 
+               max="100" 
+               step="0.01">
+        <span class="percentage-symbol">%</span>
+    </div>
+</div>
+
             
             <div class="form-group">
                 <label class="form-label">Category *</label>
@@ -401,7 +413,16 @@
         });
         
         // Format market percentage on blur
-        document.querySelector('input[name="market_percentage"]').addEventListener('blur', function() {
+        document.querySelectorAll('input[name="market_percentage"], input[name="min_percentage"]')
+.forEach(function(input){
+    input.addEventListener('blur', function () {
+        let value = parseFloat(this.value);
+        if (!isNaN(value)) {
+            this.value = value.toFixed(2);
+        }
+    });
+});
+
             let value = parseFloat(this.value);
             if (!isNaN(value)) {
                 // Format to 2 decimal places
