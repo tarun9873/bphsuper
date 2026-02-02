@@ -98,6 +98,7 @@
             object-fit: cover;
         }
         
+        /* Navigation buttons - Hide on mobile */
         .swiper-button-next, .swiper-button-prev {
             color: white;
             background: rgb(227 155 24);
@@ -108,6 +109,7 @@
             display: none;
         }
         
+        /* Show navigation buttons on desktop */
         @media (min-width: 769px) {
             .swiper-button-next, .swiper-button-prev {
                 display: flex;
@@ -136,6 +138,7 @@
             width: 20px;
             border-radius: 5px;
         }
+        /* ===== END IMAGE SLIDER STYLES ===== */
         
         /* ===== RR PANEL PROVIDER SECTION ===== */
         .rr-panel-section {
@@ -230,6 +233,7 @@
         .telegram-icon {
             font-size: 20px;
         }
+        /* ===== END RR PANEL PROVIDER SECTION ===== */
         
         .header-top {
             display: flex;
@@ -342,10 +346,8 @@
             padding: 15px;
             width: 100%;
             box-sizing: border-box;
-            position: relative;
         }
         
-        /* ===== DROPDOWN STYLES - UPDATED FOR UPWARDS ANIMATION ===== */
         .site-type-dropdown {
             background: #1e1e1e;
             padding: 20px;
@@ -354,7 +356,6 @@
             border: 1px solid #2a2a2a;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             position: relative;
-            z-index: 100;
         }
         
         .dropdown-header {
@@ -399,62 +400,22 @@
             color: #667eea;
         }
         
-        /* Dropdown content - UPWARDS ANIMATION */
         .dropdown-content {
-            position: absolute;
-            bottom: 100%;
-            top: auto;
-            left: 0;
-            right: 0;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease;
             background: #2a2a2a;
             border-radius: 10px;
             border: 1px solid #3a3a3a;
-            margin-top: 0;
-            margin-bottom: 10px;
-            transform-origin: bottom center;
-            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            margin-top: 10px;
+            opacity: 0;
+            visibility: hidden;
         }
         
         .dropdown-content.open {
             max-height: 400px;
-            animation: slideUp 0.4s ease;
-        }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Mobile overlay */
-        .dropdown-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
-        
-        .dropdown-overlay.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            opacity: 1;
+            visibility: visible;
         }
         
         .search-box {
@@ -546,113 +507,6 @@
         .category-item.active .category-count {
             background: rgba(255, 255, 255, 0.2);
             color: white;
-        }
-        
-        .selected-category {
-            padding: 15px;
-            background: #2a2a2a;
-            border-radius: 10px;
-            margin-top: 15px;
-            display: none;
-        }
-        
-        .selected-category.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .selected-label {
-            font-size: 14px;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-        
-        .selected-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .clear-filter {
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 6px;
-            color: #aaa;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-        
-        .clear-filter:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: #fff;
-        }
-        
-        /* Mobile responsive */
-        @media (max-width: 768px) {
-            .dropdown-content {
-                position: fixed;
-                bottom: 80px;
-                top: auto;
-                left: 15px;
-                right: 15px;
-                max-height: 0;
-                border-radius: 12px;
-                z-index: 1001;
-                margin-bottom: 0;
-            }
-            
-            .dropdown-content.open {
-                max-height: 60vh;
-                animation: slideUpMobile 0.4s ease;
-            }
-            
-            @keyframes slideUpMobile {
-                from {
-                    opacity: 0;
-                    transform: translateY(100px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        }
-        
-        /* Desktop adjustments */
-        @media (min-width: 769px) {
-            .dropdown-content {
-                position: absolute;
-                bottom: 100%;
-                top: auto;
-                left: 0;
-                right: 0;
-                max-height: 0;
-            }
-            
-            .dropdown-content.open {
-                max-height: 400px;
-                animation: slideUpDesktop 0.4s ease;
-            }
-            
-            @keyframes slideUpDesktop {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
         }
         
         @keyframes fadeIn {
@@ -1085,14 +939,15 @@
         }
 
         /* PAYMENT MARQUEE */
-        .payment-marquee{
+
+        .payment-marquee {
             width:100%;
             overflow:hidden;
             background:#111;
             padding:12px 0;
         }
 
-        .payment-track{
+        .payment-track {
             display:flex;
             align-items:center;
             gap:40px;
@@ -1100,26 +955,29 @@
             animation: paymentScroll 25s linear infinite;
         }
 
-        .FooterPaymentMethods--footerPaymentMethodsImage img{
+        .FooterPaymentMethods--footerPaymentMethodsImage img {
             height:40px;
             object-fit:contain;
             filter:brightness(1);
         }
 
-        @keyframes paymentScroll{
-            from{
+        /* ANIMATION */
+        @keyframes paymentScroll {
+            from {
                 transform:translateX(0);
             }
-            to{
+            to {
                 transform:translateX(-50%);
             }
         }
 
-        @media(max-width:768px){
-            .FooterPaymentMethods--footerPaymentMethodsImage img{
+        /* Mobile Smaller Logos */
+        @media(max-width:768px) {
+            .FooterPaymentMethods--footerPaymentMethodsImage img {
                 height:32px;
             }
         }
+
     </style>
 </head>
 <body>
@@ -1319,9 +1177,6 @@
             <!-- ===== END RR PANEL PROVIDER SECTION ===== -->
 
             <main id="allpanel" class="content">
-                <!-- Overlay for mobile dropdown -->
-                <div class="dropdown-overlay" id="dropdownOverlay"></div>
-                
                 <section class="site-type-dropdown">
                     <div class="dropdown-header" id="dropdownHeader">
                         <div class="dropdown-title">
@@ -1341,18 +1196,6 @@
                         
                         <div class="category-list" id="categoryList">
                         </div>
-                    </div>
-                    
-                    <div class="selected-category" id="selectedCategory">
-                        <div class="selected-label">Selected Category:</div>
-                        <div class="selected-value" id="selectedValue">
-                            <i class="fas fa-globe"></i>
-                            <span>All Site</span>
-                        </div>
-                        <button class="clear-filter" id="clearFilter">
-                            <i class="fas fa-times"></i>
-                            Clear Filter
-                        </button>
                     </div>
                 </section>
 
@@ -1427,7 +1270,7 @@
                 <span>Get IDs</span>
             </a>
 
-            <a href="#allpanel" class="nav-item">
+            <a href="#allpanel"  class="nav-item">
                 <i class="fas fa-th-large nav-icon"></i>
                 <span>All Panel</span>
             </a>
@@ -1448,7 +1291,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-    // Initialize Swiper Image Slider
+    // Initialize Swiper Image Slider with 2 images per slide
     const swiper = new Swiper('.swiper', {
         loop: true,
         autoplay: {
@@ -1479,20 +1322,16 @@
         }
     });
 
-    const allSites = JSON.parse('{!! addslashes(json_encode($sites)) !!}');
+    const allSites = {!! json_encode($sites) !!};
     
     const dropdownHeader = document.getElementById('dropdownHeader');
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownArrow = document.getElementById('dropdownArrow');
     const categoryList = document.getElementById('categoryList');
     const categorySearch = document.getElementById('categorySearch');
-    const selectedCategory = document.getElementById('selectedCategory');
-    const selectedValue = document.getElementById('selectedValue');
-    const clearFilter = document.getElementById('clearFilter');
     const sitesContainer = document.getElementById('sitesContainer');
     const filteredCount = document.getElementById('filteredCount');
     const totalCountElement = document.getElementById('totalCount');
-    const dropdownOverlay = document.getElementById('dropdownOverlay');
     
     let selectedSiteType = "All Site";
     let isDropdownOpen = false;
@@ -1566,29 +1405,11 @@
         if (isDropdownOpen) {
             dropdownContent.classList.add('open');
             dropdownArrow.classList.add('open');
-            categorySearch.focus();
-            
-            // Mobile पर overlay show करें
-            if (window.innerWidth <= 768) {
-                dropdownOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
+            // REMOVED: categorySearch.focus(); - Yeh line hi search box me focus kara rahi thi
         } else {
-            closeDropdown();
+            dropdownContent.classList.remove('open');
+            dropdownArrow.classList.remove('open');
         }
-    }
-
-    function closeDropdown() {
-        dropdownContent.classList.remove('open');
-        dropdownArrow.classList.remove('open');
-        
-        // Mobile overlay hide करें
-        if (window.innerWidth <= 768) {
-            dropdownOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        isDropdownOpen = false;
     }
 
     function renderCategories(categories) {
@@ -1622,7 +1443,7 @@
             
             item.addEventListener('click', () => {
                 selectCategory(category.name);
-                closeDropdown();
+                toggleDropdown();
             });
             
             categoryList.appendChild(item);
@@ -1631,15 +1452,6 @@
 
     function selectCategory(categoryName) {
         selectedSiteType = categoryName;
-        
-        const icon = getCategoryIcon(categoryName);
-        selectedValue.innerHTML = `
-            <i class="${icon}"></i>
-            <span>${categoryName}</span>
-        `;
-        
-        selectedCategory.classList.add('show');
-        
         filterSitesByCategory(categoryName);
         
         const categoriesData = prepareCategoriesData();
@@ -1706,9 +1518,6 @@
             }
             else if (maxPercent > 0) {
                 percentText = `Maximum Sharing ${maxPercent}%`;
-            }
-            else {
-                percentText = '';
             }
 
             siteItem.innerHTML = `
@@ -1782,18 +1591,16 @@
         
         renderCategories(categoriesData);
         filterSitesByCategory(selectedSiteType);
-        selectCategory(selectedSiteType);
         
-        dropdownHeader.addEventListener('click', toggleDropdown);
+        // Dropdown open/close functionality
+        dropdownHeader.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleDropdown();
+        });
         
-        // Dropdown बंद करने के event listeners
-        dropdownOverlay.addEventListener('click', closeDropdown);
-        
-        // ESC key से बंद करने का option
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && isDropdownOpen) {
-                closeDropdown();
-            }
+        // Search functionality - only when user types
+        categorySearch.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent dropdown from closing
         });
         
         categorySearch.addEventListener('input', function() {
@@ -1811,16 +1618,19 @@
             renderCategories(filteredTypes);
         });
         
-        clearFilter.addEventListener('click', function() {
-            selectCategory("All Site");
-            closeDropdown();
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (isDropdownOpen && 
+                !dropdownHeader.contains(event.target) && 
+                !dropdownContent.contains(event.target)) {
+                toggleDropdown();
+            }
         });
         
-        // Window resize पर adjustments
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && dropdownOverlay.classList.contains('active')) {
-                dropdownOverlay.classList.remove('active');
-                document.body.style.overflow = '';
+        // Prevent Enter key from submitting form
+        categorySearch.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
             }
         });
         
@@ -1838,23 +1648,17 @@
             });
         });
         
-        // Navigation
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
-                // Remove active class from all nav items
                 navItems.forEach(nav => nav.classList.remove('active'));
-                
-                // Add active class to clicked item
                 this.classList.add('active');
                 
-                // Add click animation
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 150);
                 
-                // Check if it's an internal anchor link
                 const href = this.getAttribute('href');
                 if (href && href.startsWith('#')) {
                     e.preventDefault();
@@ -1894,7 +1698,6 @@
         window.addEventListener('resize', resetMarquee);
         window.addEventListener('orientationchange', resetMarquee);
         
-        // Pause slider on hover
         const slider = document.querySelector('.image-slider');
         slider.addEventListener('mouseenter', () => {
             swiper.autoplay.stop();
@@ -1904,6 +1707,6 @@
             swiper.autoplay.start();
         });
     });
-    </script>
+</script>
 </body>
 </html>
