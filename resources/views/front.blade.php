@@ -993,7 +993,7 @@
                     </div>
                     
                     <button class="get-id-btn" onclick="window.location.href='https://walive.link/rustampanel'">
-                        <i class="fas fa-id-card"></i> GET ID
+                        <i class="fas fa-id-card"></i> Get Panel
                     </button>
                 </div>
                 
@@ -1242,7 +1242,7 @@
                                     <div class="button-row">
                                         <a href="{{ $site->url }}" target="_blank" class="visit-btn">Visit Website</a>
                                         <a href="https://walive.link/rustampanel" target="_blank" class="get-id-btn-site">
-                                            <i class="fas fa-id-card"></i> Get ID
+                                            <i class="fas fa-id-card"></i> Get Panel
                                         </a>
                                     </div>
                                 </div>
@@ -1267,7 +1267,7 @@
 
             <a href="https://walive.link/rustampanel" class="nav-item">
                 <i class="fas fa-id-card nav-icon"></i>
-                <span>Get IDs</span>
+                <span>Get Panels</span>
             </a>
 
             <a href="#allpanel"  class="nav-item">
