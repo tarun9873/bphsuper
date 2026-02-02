@@ -64,7 +64,7 @@
         
         .image-slider {
             width: 100%;
-            height: 180px; /* Reduced height for mobile */
+            height: 180px;
             border-radius: 15px;
             overflow: hidden;
             position: relative;
@@ -98,10 +98,9 @@
             object-fit: cover;
         }
         
-        /* Navigation buttons - Hide on mobile */
         .swiper-button-next, .swiper-button-prev {
             color: white;
-                background: rgb(227 155 24);
+            background: rgb(227 155 24);
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -109,14 +108,13 @@
             display: none;
         }
         
-        /* Show navigation buttons on desktop */
         @media (min-width: 769px) {
             .swiper-button-next, .swiper-button-prev {
                 display: flex;
             }
             
             .image-slider {
-                height: 100%; /* Increased height for desktop */
+                height: 100%;
             }
         }
         
@@ -138,7 +136,6 @@
             width: 20px;
             border-radius: 5px;
         }
-        /* ===== END IMAGE SLIDER STYLES ===== */
         
         /* ===== RR PANEL PROVIDER SECTION ===== */
         .rr-panel-section {
@@ -233,7 +230,6 @@
         .telegram-icon {
             font-size: 20px;
         }
-        /* ===== END RR PANEL PROVIDER SECTION ===== */
         
         .header-top {
             display: flex;
@@ -292,7 +288,7 @@
         }
         
         .marquee-container {
-                background: #e99f19;
+            background: #e99f19;
             padding: 8px 0;
             overflow: hidden;
             position: relative;
@@ -301,13 +297,11 @@
         }
         
         .marquee-container2 {
-                /* background: #e99f19; */
-            /* padding: 8px 0; */
             overflow: hidden;
             position: relative;
             width: 100%;
-            /* box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); */
         }
+        
         .marquee-wrapper {
             display: flex;
             width: max-content;
@@ -348,8 +342,10 @@
             padding: 15px;
             width: 100%;
             box-sizing: border-box;
+            position: relative;
         }
         
+        /* ===== DROPDOWN STYLES - UPDATED FOR UPWARDS ANIMATION ===== */
         .site-type-dropdown {
             background: #1e1e1e;
             padding: 20px;
@@ -357,6 +353,8 @@
             border-radius: 12px;
             border: 1px solid #2a2a2a;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 100;
         }
         
         .dropdown-header {
@@ -401,18 +399,62 @@
             color: #667eea;
         }
         
+        /* Dropdown content - UPWARDS ANIMATION */
         .dropdown-content {
+            position: absolute;
+            bottom: 100%;
+            top: auto;
+            left: 0;
+            right: 0;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease;
             background: #2a2a2a;
             border-radius: 10px;
             border: 1px solid #3a3a3a;
-            margin-top: 10px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            transform-origin: bottom center;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
         }
         
         .dropdown-content.open {
             max-height: 400px;
+            animation: slideUp 0.4s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile overlay */
+        .dropdown-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        
+        .dropdown-overlay.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .search-box {
@@ -552,6 +594,65 @@
         .clear-filter:hover {
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
+        }
+        
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: fixed;
+                bottom: 80px;
+                top: auto;
+                left: 15px;
+                right: 15px;
+                max-height: 0;
+                border-radius: 12px;
+                z-index: 1001;
+                margin-bottom: 0;
+            }
+            
+            .dropdown-content.open {
+                max-height: 60vh;
+                animation: slideUpMobile 0.4s ease;
+            }
+            
+            @keyframes slideUpMobile {
+                from {
+                    opacity: 0;
+                    transform: translateY(100px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+        
+        /* Desktop adjustments */
+        @media (min-width: 769px) {
+            .dropdown-content {
+                position: absolute;
+                bottom: 100%;
+                top: auto;
+                left: 0;
+                right: 0;
+                max-height: 0;
+            }
+            
+            .dropdown-content.open {
+                max-height: 400px;
+                animation: slideUpDesktop 0.4s ease;
+            }
+            
+            @keyframes slideUpDesktop {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
         }
         
         @keyframes fadeIn {
@@ -759,11 +860,12 @@
                 margin-right: auto;
             }
             
-             .header, .main-content, .marquee-container2, .bottom-nav {
+            .header, .main-content, .marquee-container2, .bottom-nav {
                 max-width: 800px;
                 margin-left: auto;
                 margin-right: auto;
             }
+            
             .image-slider {
                 height: 100%;
             }
@@ -884,11 +986,11 @@
         
         @media (max-width: 480px) {
             .image-slider {
-                height: 100%; /* Even smaller height for very small screens */
+                height: 100%;
             }
             
             .swiper-slide {
-                gap: 3px; /* Reduced gap */
+                gap: 3px;
                 padding: 3px;
             }
             
@@ -904,7 +1006,7 @@
         
         @media (max-width: 380px) {
             .image-slider {
-                height: 140px; /* Adjusted height */
+                height: 140px;
             }
             
             .logo-text {
@@ -983,45 +1085,41 @@
         }
 
         /* PAYMENT MARQUEE */
+        .payment-marquee{
+            width:100%;
+            overflow:hidden;
+            background:#111;
+            padding:12px 0;
+        }
 
-.payment-marquee{
-    width:100%;
-    overflow:hidden;
-    background:#111;
-    padding:12px 0;
-}
+        .payment-track{
+            display:flex;
+            align-items:center;
+            gap:40px;
+            width:max-content;
+            animation: paymentScroll 25s linear infinite;
+        }
 
-.payment-track{
-    display:flex;
-    align-items:center;
-    gap:40px;
-    width:max-content;
-    animation: paymentScroll 25s linear infinite;
-}
+        .FooterPaymentMethods--footerPaymentMethodsImage img{
+            height:40px;
+            object-fit:contain;
+            filter:brightness(1);
+        }
 
-.FooterPaymentMethods--footerPaymentMethodsImage img{
-    height:40px;
-    object-fit:contain;
-    filter:brightness(1);
-}
+        @keyframes paymentScroll{
+            from{
+                transform:translateX(0);
+            }
+            to{
+                transform:translateX(-50%);
+            }
+        }
 
-/* ANIMATION */
-@keyframes paymentScroll{
-    from{
-        transform:translateX(0);
-    }
-    to{
-        transform:translateX(-50%);
-    }
-}
-
-/* Mobile Smaller Logos */
-@media(max-width:768px){
-    .FooterPaymentMethods--footerPaymentMethodsImage img{
-        height:32px;
-    }
-}
-
+        @media(max-width:768px){
+            .FooterPaymentMethods--footerPaymentMethodsImage img{
+                height:32px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1117,81 +1215,80 @@
                 </div>
             </section>
             <!-- ===== END IMAGE SLIDER SECTION ===== -->
-        <div class="marquee-container2" style="background: transparent">
-            <div class="payment-track">
+            
+            <div class="marquee-container2" style="background: transparent">
+                <div class="payment-track">
+                    <!-- ===== SET 1 ===== -->
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/scan-to-pay.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/imps.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/upi.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/neft.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/gpay.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/paytm.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/phonepay.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/hdfc.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/yes-bank.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/axis.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/sbi.png">
+                    </div>
 
-        <!-- ===== SET 1 ===== -->
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/scan-to-pay.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/imps.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/upi.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/neft.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/gpay.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/paytm.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/phonepay.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/hdfc.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/yes-bank.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/axis.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/sbi.png">
-        </div>
-
-        <!-- ===== DUPLICATE SET (for infinite scroll) ===== -->
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/scan-to-pay.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/imps.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/upi.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/neft.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/gpay.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/paytm.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/phonepay.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/hdfc.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/yes-bank.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/axis.png">
-        </div>
-        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
-            <img src="img/sbi.png">
-        </div>
-
-    </div>
-        </div>
+                    <!-- ===== DUPLICATE SET (for infinite scroll) ===== -->
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/scan-to-pay.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/imps.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/upi.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/neft.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/gpay.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/paytm.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/phonepay.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/hdfc.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/yes-bank.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/axis.png">
+                    </div>
+                    <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+                        <img src="img/sbi.png">
+                    </div>
+                </div>
+            </div>
 
             <!-- ===== RR PANEL PROVIDER SECTION ===== -->
             <section class="rr-panel-section">
@@ -1222,6 +1319,9 @@
             <!-- ===== END RR PANEL PROVIDER SECTION ===== -->
 
             <main id="allpanel" class="content">
+                <!-- Overlay for mobile dropdown -->
+                <div class="dropdown-overlay" id="dropdownOverlay"></div>
+                
                 <section class="site-type-dropdown">
                     <div class="dropdown-header" id="dropdownHeader">
                         <div class="dropdown-title">
@@ -1286,18 +1386,14 @@
                                                 <div class="site-domain">{{ $domain ?? $site->url }}</div>
                                             @endif
                                             <div class="site-price">
-    @if($site->min_percentage > 0 && $site->market_percentage > 0)
-    Minimum Sharing {{ (int)$site->min_percentage }}% - Maximum Sharing {{ (int)$site->market_percentage }}%
-@elseif($site->min_percentage > 0)
-    Minimum Sharing {{ (int)$site->min_percentage }}%
-@elseif($site->market_percentage > 0)
-    Maximum Sharing {{ (int)$site->market_percentage }}%
-@endif
-
-
-</div>
-
-
+                                                @if($site->min_percentage > 0 && $site->market_percentage > 0)
+                                                    Minimum Sharing {{ (int)$site->min_percentage }}% - Maximum Sharing {{ (int)$site->market_percentage }}%
+                                                @elseif($site->min_percentage > 0)
+                                                    Minimum Sharing {{ (int)$site->min_percentage }}%
+                                                @elseif($site->market_percentage > 0)
+                                                    Maximum Sharing {{ (int)$site->market_percentage }}%
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="button-row">
@@ -1331,7 +1427,7 @@
                 <span>Get IDs</span>
             </a>
 
-            <a href="#allpanel"  class="nav-item">
+            <a href="#allpanel" class="nav-item">
                 <i class="fas fa-th-large nav-icon"></i>
                 <span>All Panel</span>
             </a>
@@ -1352,43 +1448,30 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-    // Initialize Swiper Image Slider with 2 images per slide
+    // Initialize Swiper Image Slider
     const swiper = new Swiper('.swiper', {
-        // Loop enabled for infinite scrolling
         loop: true,
-        
-        // Autoplay configuration
         autoplay: {
-            delay: 2000, // 2 seconds delay between slides
+            delay: 2000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
         },
-        
-        // Pagination dots
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
             dynamicBullets: true,
         },
-        
-        // Navigation arrows (hidden on mobile, shown on desktop)
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
-        
-        // Effect and speed
         effect: 'slide',
         speed: 800,
-        
-        // Responsive breakpoints
         breakpoints: {
-            // For desktop - 2 images per slide
             769: {
-                slidesPerView: 1, // 1 slide (which contains 2 images)
+                slidesPerView: 1,
                 spaceBetween: 0,
             },
-            // For mobile - 2 images per slide (already set in CSS)
             320: {
                 slidesPerView: 1,
                 spaceBetween: 0,
@@ -1397,7 +1480,6 @@
     });
 
     const allSites = JSON.parse('{!! addslashes(json_encode($sites)) !!}');
-
     
     const dropdownHeader = document.getElementById('dropdownHeader');
     const dropdownContent = document.getElementById('dropdownContent');
@@ -1410,6 +1492,7 @@
     const sitesContainer = document.getElementById('sitesContainer');
     const filteredCount = document.getElementById('filteredCount');
     const totalCountElement = document.getElementById('totalCount');
+    const dropdownOverlay = document.getElementById('dropdownOverlay');
     
     let selectedSiteType = "All Site";
     let isDropdownOpen = false;
@@ -1484,10 +1567,28 @@
             dropdownContent.classList.add('open');
             dropdownArrow.classList.add('open');
             categorySearch.focus();
+            
+            // Mobile पर overlay show करें
+            if (window.innerWidth <= 768) {
+                dropdownOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
         } else {
-            dropdownContent.classList.remove('open');
-            dropdownArrow.classList.remove('open');
+            closeDropdown();
         }
+    }
+
+    function closeDropdown() {
+        dropdownContent.classList.remove('open');
+        dropdownArrow.classList.remove('open');
+        
+        // Mobile overlay hide करें
+        if (window.innerWidth <= 768) {
+            dropdownOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        isDropdownOpen = false;
     }
 
     function renderCategories(categories) {
@@ -1521,7 +1622,7 @@
             
             item.addEventListener('click', () => {
                 selectCategory(category.name);
-                toggleDropdown();
+                closeDropdown();
             });
             
             categoryList.appendChild(item);
@@ -1565,79 +1666,77 @@
     }
 
     function renderSites(sites) {
-    sitesContainer.innerHTML = '';
-        
-    if (sites.length === 0) {
-        const noSitesMessage = document.createElement('div');
-        noSitesMessage.className = 'no-sites-message';
-        noSitesMessage.innerHTML = `
-            <i class="fas fa-search"></i>
-            <h3>No Sites Available</h3>
-            <p>No sites found for "${selectedSiteType}"</p>
-        `;
-        sitesContainer.appendChild(noSitesMessage);
-        return;
-    }
-        
-    sites.forEach(site => {
-        const siteItem = document.createElement('div');
-        siteItem.className = 'site-item';
-        siteItem.setAttribute('data-category', site.category);
+        sitesContainer.innerHTML = '';
             
-        let domain = site.url;
-        try {
-            const url = new URL(site.url);
-            domain = url.hostname.replace('www.', '');
-        } catch (e) {}
+        if (sites.length === 0) {
+            const noSitesMessage = document.createElement('div');
+            noSitesMessage.className = 'no-sites-message';
+            noSitesMessage.innerHTML = `
+                <i class="fas fa-search"></i>
+                <h3>No Sites Available</h3>
+                <p>No sites found for "${selectedSiteType}"</p>
+            `;
+            sitesContainer.appendChild(noSitesMessage);
+            return;
+        }
+            
+        sites.forEach(site => {
+            const siteItem = document.createElement('div');
+            siteItem.className = 'site-item';
+            siteItem.setAttribute('data-category', site.category);
+                
+            let domain = site.url;
+            try {
+                const url = new URL(site.url);
+                domain = url.hostname.replace('www.', '');
+            } catch (e) {}
 
-        const firstLetter = site.name.charAt(0).toUpperCase();
+            const firstLetter = site.name.charAt(0).toUpperCase();
 
-        // ✅ SAFE NUMBER CONVERSION
-        const maxPercent = Number(site.market_percentage);
-const minPercent = Number(site.min_percentage);
+            const maxPercent = Number(site.market_percentage);
+            const minPercent = Number(site.min_percentage);
 
-let percentText = '';
+            let percentText = '';
 
-if (minPercent > 0 && maxPercent > 0) {
-    percentText = `Minimum Sharing ${minPercent}% - Maximum Sharing ${maxPercent}%`;
-}
-else if (minPercent > 0) {
-    percentText = `Minimum Sharing ${minPercent}%`;
-}
-else if (maxPercent > 0) {
-    percentText = `Maximum Sharing ${maxPercent}%`;
-}
-else {
-    percentText = '';
-}
+            if (minPercent > 0 && maxPercent > 0) {
+                percentText = `Minimum Sharing ${minPercent}% - Maximum Sharing ${maxPercent}%`;
+            }
+            else if (minPercent > 0) {
+                percentText = `Minimum Sharing ${minPercent}%`;
+            }
+            else if (maxPercent > 0) {
+                percentText = `Maximum Sharing ${maxPercent}%`;
+            }
+            else {
+                percentText = '';
+            }
 
-        siteItem.innerHTML = `
-            <div class="site-item-header">
-                <div class="site-logo">
-                    <img src="{{ asset('storage/logos') }}/${site.logo}" 
-                         alt="${site.name} Logo" 
-                         onerror="handleLogoError(this, '${firstLetter}')">
-                </div>
-                <div class="site-info">
-                    <div class="site-name-full">${site.name} 
-                        <span class="site-name-version">(${site.category})</span>
+            siteItem.innerHTML = `
+                <div class="site-item-header">
+                    <div class="site-logo">
+                        <img src="{{ asset('storage/logos') }}/${site.logo}" 
+                             alt="${site.name} Logo" 
+                             onerror="handleLogoError(this, '${firstLetter}')">
                     </div>
-                    <div class="site-domain">${domain}</div>
-                    <div class="site-price">${percentText}</div>
+                    <div class="site-info">
+                        <div class="site-name-full">${site.name} 
+                            <span class="site-name-version">(${site.category})</span>
+                        </div>
+                        <div class="site-domain">${domain}</div>
+                        <div class="site-price">${percentText}</div>
+                    </div>
                 </div>
-            </div>
-            <div class="button-row">
-                <a href="${site.url}" target="_blank" class="visit-btn">Visit Website</a>
-                <a href="https://walive.link/rustampanel" target="_blank" class="get-id-btn-site">
-                    <i class="fas fa-id-card"></i> Get Panel
-                </a>
-            </div>
-        `;
-            
-        sitesContainer.appendChild(siteItem);
-    });
-}
-
+                <div class="button-row">
+                    <a href="${site.url}" target="_blank" class="visit-btn">Visit Website</a>
+                    <a href="https://walive.link/rustampanel" target="_blank" class="get-id-btn-site">
+                        <i class="fas fa-id-card"></i> Get Panel
+                    </a>
+                </div>
+            `;
+                
+            sitesContainer.appendChild(siteItem);
+        });
+    }
 
     function updateSelectedTypeInURL(typeName) {
         const url = new URL(window.location);
@@ -1687,6 +1786,16 @@ else {
         
         dropdownHeader.addEventListener('click', toggleDropdown);
         
+        // Dropdown बंद करने के event listeners
+        dropdownOverlay.addEventListener('click', closeDropdown);
+        
+        // ESC key से बंद करने का option
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isDropdownOpen) {
+                closeDropdown();
+            }
+        });
+        
         categorySearch.addEventListener('input', function() {
             const searchTerm = this.value.toLowerCase().trim();
             
@@ -1704,13 +1813,14 @@ else {
         
         clearFilter.addEventListener('click', function() {
             selectCategory("All Site");
+            closeDropdown();
         });
         
-        document.addEventListener('click', function(event) {
-            if (!dropdownHeader.contains(event.target) && 
-                !dropdownContent.contains(event.target) && 
-                isDropdownOpen) {
-                toggleDropdown();
+        // Window resize पर adjustments
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && dropdownOverlay.classList.contains('active')) {
+                dropdownOverlay.classList.remove('active');
+                document.body.style.overflow = '';
             }
         });
         
@@ -1728,7 +1838,7 @@ else {
             });
         });
         
-        // FIXED NAVIGATION CODE - YAHAN CHANGE KIYA HAI
+        // Navigation
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
@@ -1757,7 +1867,6 @@ else {
                         });
                     }
                 }
-                // External links will work normally
             });
         });
         
@@ -1774,7 +1883,6 @@ else {
             }
         });
         
-          
         function resetMarquee() {
             const marquee = document.querySelector('.marquee-wrapper');
             marquee.style.animation = 'none';
@@ -1796,6 +1904,6 @@ else {
             swiper.autoplay.start();
         });
     });
-</script>
+    </script>
 </body>
 </html>
