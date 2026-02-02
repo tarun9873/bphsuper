@@ -1159,6 +1159,47 @@
     font-weight:800;
 }
 
+/* PAYMENT MARQUEE */
+
+.payment-marquee{
+    width:100%;
+    overflow:hidden;
+    background:#111;
+    padding:12px 0;
+}
+
+.payment-track{
+    display:flex;
+    align-items:center;
+    gap:40px;
+    width:max-content;
+    animation: paymentScroll 25s linear infinite;
+}
+
+.FooterPaymentMethods--footerPaymentMethodsImage img{
+    height:40px;
+    object-fit:contain;
+    filter:brightness(1);
+}
+
+/* ANIMATION */
+@keyframes paymentScroll{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+/* Mobile Smaller Logos */
+@media(max-width:768px){
+    .FooterPaymentMethods--footerPaymentMethodsImage img{
+        height:32px;
+    }
+}
+
+
 
     </style>
 </head>
@@ -1255,6 +1296,86 @@
                 </div>
             </section>
             <!-- ===== END IMAGE SLIDER SECTION ===== -->
+
+
+            <div class="payment-marquee">
+
+    <div class="payment-track">
+
+        <!-- ===== SET 1 ===== -->
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/scan-to-pay.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/imps.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/upi.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/neft.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/gpay.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/paytm.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/phonepay.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/hdfc.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/yes-bank.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/axis.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/sbi.png">
+        </div>
+
+        <!-- ===== DUPLICATE SET (for infinite scroll) ===== -->
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/scan-to-pay.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/imps.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/upi.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/neft.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/gpay.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/paytm.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/phonepay.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/hdfc.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/yes-bank.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/axis.png">
+        </div>
+        <div class="FooterPaymentMethods--footerPaymentMethodsImage">
+            <img src="img/sbi.png">
+        </div>
+
+    </div>
+
+</div>
+
 
             <!-- ===== RR PANEL PROVIDER SECTION ===== -->
             <section class="rr-panel-section">
