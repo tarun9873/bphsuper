@@ -407,6 +407,7 @@
             background: #2a2a2a;
             border-radius: 10px;
             border: 1px solid #3a3a3a;
+            position: absolute;
             margin-top: 10px;
             opacity: 0;
             visibility: hidden;
@@ -1433,9 +1434,7 @@
             item.className = `category-item ${isActive ? 'active' : ''}`;
             item.innerHTML = `
                 <div class="category-name">
-                    <div class="category-icon">
-                        <i class="${icon}"></i>
-                    </div>
+                    
                     <span>${category.name}</span>
                 </div>
                 <div class="category-count">${category.count}</div>
