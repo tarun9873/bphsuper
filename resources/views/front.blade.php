@@ -1537,7 +1537,7 @@
 
             <a href="https://walive.link/rustampanel" class="nav-item">
                 <i class="fas fa-id-card nav-icon"></i>
-                <span>Get IDs</span>
+                <span>Get Panel</span>
             </a>
 
             <a href="#allpanel"  class="nav-item">
@@ -1860,7 +1860,7 @@
                 <a href="https://walive.link/rustampanel" 
                    target="_blank" 
                    class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Get ID
+                    <i class="fab fa-whatsapp"></i> Get Panel
                 </a>
 
             </div>
