@@ -300,6 +300,14 @@
             box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
         }
         
+        .marquee-container2 {
+                /* background: #e99f19; */
+            /* padding: 8px 0; */
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+            /* box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); */
+        }
         .marquee-wrapper {
             display: flex;
             width: max-content;
@@ -751,6 +759,11 @@
                 margin-right: auto;
             }
             
+             .header, .main-content, .marquee-container2, .bottom-nav {
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+            }
             .image-slider {
                 height: 100%;
             }
@@ -1104,7 +1117,7 @@
                 </div>
             </section>
             <!-- ===== END IMAGE SLIDER SECTION ===== -->
-        <div class="marquee-container" style="background: transparent">
+        <div class="marquee-container2" style="background: transparent">
             <div class="payment-track">
 
         <!-- ===== SET 1 ===== -->
