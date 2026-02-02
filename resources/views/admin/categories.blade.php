@@ -61,6 +61,23 @@
         <div class="bg-white rounded-xl shadow-sm border overflow-hidden mb-8">
             <!-- Card Header -->
             <div class="px-6 py-4 border-b bg-gradient-to-r from-gray-50 to-white">
+                <!-- Add New Category -->
+<div class="px-6 py-4 border-b bg-white">
+    <form action="{{ route('category.store') }}" method="POST" class="flex flex-col sm:flex-row gap-3">
+        @csrf
+        <input type="text"
+               name="name"
+               placeholder="Enter new category name"
+               required
+               class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        <button type="submit"
+                class="px-6 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg hover:from-green-700 hover:to-green-800 transition">
+            <i class="fas fa-plus mr-1"></i> Add Category
+        </button>
+    </form>
+</div>
+
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
                         <h2 class="text-lg font-semibold text-gray-800">All Categories</h2>

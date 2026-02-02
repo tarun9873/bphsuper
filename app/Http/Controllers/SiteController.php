@@ -192,15 +192,30 @@ class SiteController extends Controller
     }
 
     public function storeCategory(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'nullable|max:500'
-        ]);
+{
+    $request->validate([
+        'name' => 'required|max:255'
+    ]);
 
-        // Category will be added when first site is created with this category
-        return back()->with('success', 'Category created! Now add sites to this category.');
+    // Already exists check
+    $exists = Site::where('category', $request->name)->exists();
+
+    if ($exists) {
+        return back()->with('error', 'Category already exists!');
     }
+
+    // Insert dummy site so category appears
+    Site::create([
+        'name' => 'temp-site',
+        'logo' => 'default.png',
+        'url' => 'https://example.com',
+        'market_percentage' => 0,
+        'category' => $request->name
+    ]);
+
+    return back()->with('success', 'Category added successfully!');
+}
+
 
     public function updateCategory(Request $request)
     {

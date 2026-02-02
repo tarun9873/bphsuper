@@ -1617,13 +1617,14 @@
             }
         });
         
+          
         function resetMarquee() {
             const marquee = document.querySelector('.marquee-wrapper');
             marquee.style.animation = 'none';
             setTimeout(() => {
                 marquee.style.animation = 'marquee 20s linear infinite';
             }, 10);
-        }
+        }  
         
         window.addEventListener('resize', resetMarquee);
         window.addEventListener('orientationchange', resetMarquee);

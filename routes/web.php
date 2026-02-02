@@ -27,5 +27,8 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
 Route::get('/admin/categories',[SiteController::class,'categories'])->name('categories');
 Route::post('/admin/category/update',[SiteController::class,'updateCategory'])->name('category.update');
 Route::post('/admin/category/delete',[SiteController::class,'deleteCategory'])->name('category.delete');
+Route::post('/category/store', [SiteController::class, 'storeCategory'])
+    ->name('category.store');
+
 
 });
