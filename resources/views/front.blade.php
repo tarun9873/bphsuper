@@ -1516,7 +1516,7 @@
                 percentText = `Minimum Sharing ${minPercent}%`;
             }
             else if (maxPercent > 0) {
-                percentText = `Maximum Sharing ${maxPercent}%`;
+                percentText = `Markate Rate ${maxPercent}%`;
             }
 
             siteItem.innerHTML = `
@@ -1707,5 +1707,50 @@
         });
     });
 </script>
+
+
+<script>
+/* Disable Right Click */
+document.addEventListener('contextmenu', function(e){
+    e.preventDefault();
+});
+
+/* Disable Keyboard Shortcuts */
+document.addEventListener('keydown', function(e){
+
+    // Ctrl+C, Ctrl+V, Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+A
+    if (e.ctrlKey && (
+        e.key === 'c' || 
+        e.key === 'v' || 
+        e.key === 'u' || 
+        e.key === 's' || 
+        e.key === 'p' || 
+        e.key === 'a'
+    )) {
+        e.preventDefault();
+    }
+
+    // F12
+    if (e.keyCode === 123) {
+        e.preventDefault();
+    }
+
+    // Ctrl + Shift + I / J / C
+    if (e.ctrlKey && e.shiftKey && (
+        e.key === 'i' || 
+        e.key === 'j' || 
+        e.key === 'c'
+    )) {
+        e.preventDefault();
+    }
+});
+</script>
+<script>
+document.querySelectorAll("img").forEach(img => {
+    img.setAttribute("draggable", "false");
+    img.addEventListener("contextmenu", e => e.preventDefault());
+});
+</script>
+
 </body>
 </html>
