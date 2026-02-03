@@ -985,6 +985,105 @@
             }
         }
 
+
+
+        /* Overlay */
+.popup-overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+
+/* Box */
+.popup-box{
+  background:#111;
+  width:90%;
+  max-width:400px;
+  padding:25px;
+  border-radius:15px;
+  text-align:center;
+  color:#fff;
+  position:relative;
+  animation:scaleIn .4s ease;
+}
+
+/* Close */
+.popup-close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:26px;
+  cursor:pointer;
+}
+
+/* Logo */
+.popup-logo{
+  width:120px;
+  margin-bottom:15px;
+}
+
+/* Text */
+.popup-box h2{
+  color:#ffb400;
+  margin-bottom:10px;
+}
+
+.tagline{
+  font-size:15px;
+  margin-bottom:10px;
+}
+
+.desc{
+  font-size:14px;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+/* Social Icons */
+.popup-social{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+}
+
+.popup-social a{
+  width:45px;
+  height:45px;
+  background:#222;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:20px;
+  transition:.3s;
+}
+
+.popup-social a:hover{
+  background:#ffb400;
+  color:#000;
+}
+
+/* Animation */
+@keyframes scaleIn{
+  from{transform:scale(0.7);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+/* Mobile */
+@media(max-width:480px){
+  .popup-box{
+    padding:20px;
+  }
+}
+
     </style>
 </head>
 <body>
@@ -1293,6 +1392,51 @@
             </a>
         </nav>
     </div>
+
+
+    <!-- POPUP OVERLAY -->
+<div id="welcomePopup" class="popup-overlay">
+  <div class="popup-box">
+
+    <!-- CLOSE BUTTON -->
+    <span class="popup-close" onclick="closePopup()">×</span>
+
+    <!-- LOGO -->
+    <img src="/img/BPH-SUPER.png" class="popup-logo">
+
+    <h2>WELCOME TO BPh SUPER PANEL !</h2>
+    <p class="tagline">Asia's Best Gaming Platform Provider</p>
+
+    <p class="desc">
+      Site Development Available Your Domain & Your Logo Contact Fast <br>
+      Start your journey with us today!
+    </p>
+
+    <h4>Join our social media to stay updated</h4>
+
+    <div class="popup-social">
+      <a href="#"><i class="fab fa-telegram"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      {{-- <a href="#"><i class="fab fa-linkedin"></i></a> --}}
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+/* Show after 5 seconds */
+setTimeout(function(){
+  document.getElementById("welcomePopup").style.display="flex";
+},3000);
+
+/* Close */
+function closePopup(){
+  document.getElementById("welcomePopup").style.display="none";
+}
+</script>
 
     <!-- Swiper JS for Image Slider -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
