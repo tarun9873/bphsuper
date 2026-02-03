@@ -144,79 +144,96 @@ Min / Max %
                                     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100" id="sitesTableBody">
-                                @foreach($sites as $site)
-                                <tr class="hover:bg-gray-50 transition-colors duration-300 site-row" data-category="{{ $site->category }}">
-                                    <td class="py-4 px-6">
-                                        <div class="flex items-center">
-                                            <div class="w-10 h-10 rounded-lg overflow-hidden mr-4 border border-gray-200">
-                                                <img src="{{ asset('storage/logos/' . $site->logo) }}" 
-                                                     onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($site->name) }}&background=667eea&color=fff'"
-                                                     class="w-full h-full object-cover">
-                                            </div>
-                                            <div>
-                                                <p class="font-semibold text-gray-800">{{ $site->name }}</p>
-                                                <a href="{{ $site->url }}" target="_blank" class="text-sm text-primary-500 hover:text-primary-600 flex items-center">
-                                                    {{ Str::limit($site->url, 25) }}
-                                                    <i class="fas fa-external-link-alt ml-1 text-xs"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 category-badge">
-                                            {{ $site->category }}
-                                        </span>
-                                    </td>
-                                  <td class="py-4 px-6">
-    <div class="flex flex-col">
-        <span class="font-semibold text-gray-800">
-            Min: {{ $site->min_percentage ?? 0 }}%
-        </span>
+                           <tbody class="divide-y divide-gray-100" id="sortableSites">
 
-        <span class="font-semibold text-gray-800">
-            Max: {{ $site->market_percentage ?? 0 }}%
-        </span>
+@foreach($sites as $site)
+<tr 
+    data-id="{{ $site->id }}" 
+    data-category="{{ $site->category }}" 
+    class="hover:bg-gray-50 transition-colors duration-300 site-row cursor-move">
 
-        <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
-            <div class="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full" 
-                 style="width: {{ min($site->market_percentage ?? 0, 100) }}%"></div>
+    <!-- SITE -->
+    <td class="py-4 px-6">
+        <div class="flex items-center">
+            <div class="w-10 h-10 rounded-lg overflow-hidden mr-4 border border-gray-200">
+                <img src="{{ asset('storage/logos/' . $site->logo) }}" 
+                     onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($site->name) }}&background=667eea&color=fff'"
+                     class="w-full h-full object-cover">
+            </div>
+            <div>
+                <p class="font-semibold text-gray-800">{{ $site->name }}</p>
+                <a href="{{ $site->url }}" target="_blank" 
+                   class="text-sm text-primary-500 hover:text-primary-600 flex items-center">
+                    {{ Str::limit($site->url, 25) }}
+                    <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                </a>
+            </div>
         </div>
-    </div>
-</td>
+    </td>
 
-                                    <td class="py-4 px-6">
-                                        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                            <i class="fas fa-circle text-xs mr-1"></i> Active
-                                        </span>
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <div class="flex items-center space-x-2">
-                                            <a href="{{ route('sites.edit', $site->id) }}" 
-                                               class="p-2 text-primary-500 hover:text-primary-600 transition-colors duration-300 tooltip" 
-                                               data-tooltip="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('sites.delete', $site->id) }}" method="POST" 
-                                                  onsubmit="return confirm('Are you sure you want to delete {{ $site->name }}?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" 
-                                                        class="p-2 text-danger hover:text-red-700 transition-colors duration-300 tooltip" 
-                                                        data-tooltip="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                            <a href="{{ $site->url }}" target="_blank" 
-                                               class="p-2 text-gray-500 hover:text-gray-700 transition-colors duration-300 tooltip" 
-                                               data-tooltip="Visit">
-                                                <i class="fas fa-external-link-alt"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
+    <!-- CATEGORY -->
+    <td class="py-4 px-6">
+        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800 category-badge">
+            {{ $site->category }}
+        </span>
+    </td>
+
+    <!-- MIN / MAX -->
+    <td class="py-4 px-6">
+        <div class="flex flex-col">
+            <span class="font-semibold text-gray-800">
+                Min: {{ $site->min_percentage ?? 0 }}%
+            </span>
+
+            <span class="font-semibold text-gray-800">
+                Max: {{ $site->market_percentage ?? 0 }}%
+            </span>
+
+            <div class="w-24 h-2 bg-gray-200 rounded-full overflow-hidden mt-1">
+                <div class="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full" 
+                     style="width: {{ min($site->market_percentage ?? 0, 100) }}%">
+                </div>
+            </div>
+        </div>
+    </td>
+
+    <!-- STATUS -->
+    <td class="py-4 px-6">
+        <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+            <i class="fas fa-circle text-xs mr-1"></i> Active
+        </span>
+    </td>
+
+    <!-- ACTIONS -->
+    <td class="py-4 px-6">
+        <div class="flex items-center space-x-2">
+            <a href="{{ route('sites.edit', $site->id) }}" 
+               class="p-2 text-primary-500 hover:text-primary-600">
+                <i class="fas fa-edit"></i>
+            </a>
+
+            <form action="{{ route('sites.delete', $site->id) }}" method="POST"
+                  onsubmit="return confirm('Are you sure you want to delete {{ $site->name }}?')">
+                @csrf
+                @method('DELETE')
+                <button type="submit" 
+                        class="p-2 text-danger hover:text-red-700">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>
+
+            <a href="{{ $site->url }}" target="_blank" 
+               class="p-2 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-external-link-alt"></i>
+            </a>
+        </div>
+    </td>
+
+</tr>
+@endforeach
+
+</tbody>
+
                         </table>
                     </div>
 
@@ -575,4 +592,35 @@ Min / Max %
             });
         }, 5000);
     </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<script>
+new Sortable(document.getElementById('sortableSites'), {
+    animation: 150,
+    ghostClass: 'bg-yellow-100',
+    onEnd: function () {
+
+        let order = [];
+
+        document.querySelectorAll('#sortableSites tr').forEach((row, index) => {
+            order.push({
+                id: row.dataset.id,
+                position: index + 1
+            });
+        });
+
+        fetch("{{ route('sites.reorder') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({order: order})
+        });
+    }
+});
+</script>
+
 @endsection

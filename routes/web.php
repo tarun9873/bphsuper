@@ -30,5 +30,9 @@ Route::post('/admin/category/delete',[SiteController::class,'deleteCategory'])->
 Route::post('/category/store', [SiteController::class, 'storeCategory'])
     ->name('category.store');
 
+    Route::post('/admin/sites/reorder',[SiteController::class,'reorder'])
+->name('sites.reorder');
+
+
 
 });

@@ -17,7 +17,7 @@ class SiteController extends Controller
     ======================*/
     public function front()
     {
-        $sites = Site::all();
+        $sites = Site::orderBy('position')->get();
         $categories = Site::select('category')
             ->distinct()
             ->orderBy('category')
@@ -78,7 +78,7 @@ class SiteController extends Controller
     ======================*/
     public function admin()
     {
-        $sites = Site::all();
+        $sites = Site::orderBy('position')->get();
         $categories = Site::select('category')->distinct()->orderBy('category')->pluck('category');
         return view('admin.admin', compact('sites', 'categories'));
     }
@@ -125,10 +125,12 @@ class SiteController extends Controller
             'name' => $request->name,
             'logo' => $filename,
             'url' => $request->url,
-            'market_percentage' => $request->market_percentage ?? 0, // MAX
-            'min_percentage' => $request->min_percentage ?? 0,       // MIN
-            'category' => $category
+            'market_percentage' => $request->market_percentage ?? 0,
+            'min_percentage' => $request->min_percentage ?? 0,
+            'category' => $category,
+            'position' => Site::max('position') + 1
         ]);
+
 
 
         return back()->with('success', 'Site added successfully!');
@@ -252,5 +254,16 @@ class SiteController extends Controller
         }
 
         return back()->with('success', 'Category removed!');
+    }
+
+
+    public function reorder(Request $request)
+    {
+        foreach ($request->order as $item) {
+            Site::where('id', $item['id'])
+                ->update(['position' => $item['position']]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }
