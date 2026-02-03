@@ -293,7 +293,7 @@ function closePopup(){
             let percentText = '';
 
             if (minPercent > 0 && maxPercent > 0) {
-                percentText = `Minimum Sharing ${minPercent}% - Maximum Sharing ${maxPercent}%`;
+                percentText = `Min : Sharing ${minPercent}% - Max : Sharing ${maxPercent}%`;
             }
             else if (minPercent > 0) {
                 percentText = `Minimum Sharing ${minPercent}%`;
