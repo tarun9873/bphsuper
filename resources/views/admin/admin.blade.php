@@ -150,7 +150,7 @@ Min / Max %
 <tr 
     data-id="{{ $site->id }}" 
     data-category="{{ $site->category }}" 
-    class="hover:bg-gray-50 transition-colors duration-300 site-row cursor-move">
+    class="hover:bg-gray-50 transition-colors duration-300 site-row cursor-move select-none">
 
     <!-- SITE -->
     <td class="py-4 px-6">
@@ -600,8 +600,12 @@ Min / Max %
 new Sortable(document.getElementById('sortableSites'), {
     animation: 150,
     ghostClass: 'bg-yellow-100',
-    onEnd: function () {
 
+    delay: 200,              // Mobile long-press
+    delayOnTouchOnly: true,  // Only for touch
+    touchStartThreshold: 5,  // Finger movement tolerance
+
+    onEnd: function () {
         let order = [];
 
         document.querySelectorAll('#sortableSites tr').forEach((row, index) => {
@@ -621,6 +625,7 @@ new Sortable(document.getElementById('sortableSites'), {
         });
     }
 });
+
 </script>
 
 @endsection
