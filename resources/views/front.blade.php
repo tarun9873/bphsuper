@@ -8,6 +8,12 @@
     <!-- Swiper CSS for Image Slider -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <style>
+
+        body{
+   user-select:none;
+   -webkit-user-select:none;
+}
+
         * {
             margin: 0;
             padding: 0;
@@ -1710,32 +1716,28 @@
 
 
 <script>
-/* Disable Right Click */
-document.addEventListener('contextmenu', function(e){
-    e.preventDefault();
-});
+(function(){
 
-/* Disable Keyboard Shortcuts */
+/* Disable Right Click */
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+/* Disable Keys */
 document.addEventListener('keydown', function(e){
 
-    // Ctrl+C, Ctrl+V, Ctrl+U, Ctrl+S, Ctrl+P, Ctrl+A
     if (e.ctrlKey && (
-        e.key === 'c' || 
-        e.key === 'v' || 
         e.key === 'u' || 
         e.key === 's' || 
-        e.key === 'p' || 
-        e.key === 'a'
+        e.key === 'c' || 
+        e.key === 'a' || 
+        e.key === 'v'
     )) {
         e.preventDefault();
     }
 
-    // F12
-    if (e.keyCode === 123) {
+    if (e.keyCode === 123) { // F12
         e.preventDefault();
     }
 
-    // Ctrl + Shift + I / J / C
     if (e.ctrlKey && e.shiftKey && (
         e.key === 'i' || 
         e.key === 'j' || 
@@ -1744,7 +1746,31 @@ document.addEventListener('keydown', function(e){
         e.preventDefault();
     }
 });
+
+/* Inspect Open Detect */
+setInterval(function(){
+    if(window.outerWidth - window.innerWidth > 200 ||
+       window.outerHeight - window.innerHeight > 200){
+
+        document.body.innerHTML = `
+            <div style="background:#000;height:100vh;
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-size:22px;font-weight:bold;">
+            ACCESS DENIED
+            </div>
+        `;
+    }
+},1000);
+
+/* Disable Image Save */
+document.querySelectorAll("img").forEach(img=>{
+    img.setAttribute("draggable","false");
+    img.addEventListener("contextmenu", e=>e.preventDefault());
+});
+
+})();
 </script>
+
 <script>
 document.querySelectorAll("img").forEach(img => {
     img.setAttribute("draggable", "false");
