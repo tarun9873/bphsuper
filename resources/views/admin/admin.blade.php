@@ -219,10 +219,17 @@
 
                     </div>
 
+
                     <!-- Mobile Cards - Enhanced -->
-                    <div class="lg:hidden" id="mobileSitesContainer">
+                  <div class="lg:hidden" id="mobileSortableSites">
+
                         @foreach($sites as $site)
-                        <div class="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-300 site-card" data-category="{{ $site->category }}">
+                       <div class="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-300 site-card"
+     data-id="{{ $site->id }}"
+     data-category="{{ $site->category }}">
+<div class="flex justify-end mb-2 drag-handle text-gray-400">
+    <i class="fas fa-grip-vertical"></i>
+</div>
                             <div class="flex items-start justify-between mb-3">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 rounded-lg overflow-hidden mr-3 border border-gray-200">
@@ -588,7 +595,7 @@
 </style>
 
 <script>
-new Sortable(document.getElementById('sortableSites'), {
+new Sortable(document.getElementById('mobileSortableSites'), {
     animation: 150,
     handle: ".drag-handle",
 
@@ -596,9 +603,9 @@ new Sortable(document.getElementById('sortableSites'), {
 
         let order = [];
 
-        document.querySelectorAll('#sortableSites tr').forEach((row, index) => {
+        document.querySelectorAll('#mobileSortableSites [data-id]').forEach((card, index) => {
             order.push({
-                id: row.dataset.id,
+                id: card.dataset.id,
                 position: index + 1
             });
         });
