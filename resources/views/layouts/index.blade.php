@@ -1,15 +1,3 @@
-@extends('layouts.app')
-
-@section('title','BPH Super Panel Provider | Trusted Betting Panel & White Label Solutions India')
-
-@section('meta_description','Get Admin, Master, Super Master & Agent Panels from BPH Super Panel Provider. Trusted betting panel provider in India offering white label B2B & B2C solutions with 24/7 support and instant ID creation.')
-
-@section('meta_keywords','bph super panel provider, betting panel provider india, cricket betting panel, white label betting panel, admin panel betting, master panel betting, super master panel, agent panel provider, online betting id provider, b2b betting panel, b2c betting panel, betting software india')
-
-
-
-@section('content')
-
 
 
         <div class="marquee-container">
@@ -161,7 +149,7 @@
 
             <!-- ===== RR PANEL PROVIDER SECTION ===== -->
             <section class="rr-panel-section">
-                <h1 class="rr-panel-title">BPH SUPER PANEL PROVIDER</h1>
+                <h2 class="rr-panel-title">BPH SUPER PANEL PROVIDER</h2>
                 
                 <p class="rr-panel-description">
                     Get Your Admin, Master, Super Master, Agent Panel<br>
@@ -271,5 +259,3 @@
         </div>
 
       
-
-@endsection
