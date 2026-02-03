@@ -12,7 +12,7 @@
 <meta name="keywords" content="@yield('meta_keywords','bph super panel provider, betting panel provider india, cricket betting panel, white label betting panel, admin panel betting, master panel betting, super master panel, agent panel provider, online betting id provider, b2b betting panel, b2c betting panel, betting software india')">
 
 <meta name="robots" content="index, follow">
-
+<meta name="google-site-verification" content="dLCAnWn88QcIW4iY1DUeDBnkXS4IJE1oq3jJIr86jDo" />
 <!-- FAVICON -->
 <link rel="icon" href="{{ asset('/img/BPH-SUPER.png') }}">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/img/BPH-SUPER.png') }}">
