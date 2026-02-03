@@ -32,27 +32,7 @@
             <main id="allpanel" class="content">
 
 <!-- ===== FILTER DROPDOWN ===== -->
-<section class="site-type-dropdown">
 
-    <div class="dropdown-header" id="dropdownHeader">
-        <div class="dropdown-title">
-            <i class="fas fa-filter"></i>
-            <span>Site Type</span>
-        </div>
-        <div class="dropdown-arrow" id="dropdownArrow">▼</div>
-    </div>
-
-    <div class="dropdown-content" id="dropdownContent">
-
-        <div class="search-box">
-            <div class="search-input">
-                <i class="fas fa-search"></i>
-                <input type="text" id="siteSearch" placeholder="Search site...">
-            </div>
-        </div>
-
-    </div>
-</section>
 
 <!-- ===== SITE LIST ===== -->
 <section class="site-list">
