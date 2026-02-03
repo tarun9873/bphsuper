@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class SiteController extends Controller
 {
     public function __construct()
-    {
-        $this->middleware('admin.auth')->except(['front']);
-    }
+{
+    $this->middleware('admin.auth')->except(['front','b2b','b2c']);
+}
 
     /* ======================
         FRONT PAGE with categories
