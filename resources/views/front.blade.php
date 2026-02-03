@@ -168,15 +168,26 @@
                     From Trusted Panel Provider in India BPH SUPER PANEL Provider
                 </p>
                 
+                
                 <div class="rr-panel-features">
                     <div class="feature-box">
                         <div class="feature-title">DL MDL SMDL</div>
                         <div class="feature-subtitle">/ B2B</div>
+                        <a href="/b2b-sites" class="b2bc-btn">
+    <i class="fas fa-layer-group"></i>
+    Know More
+</a>
+
                     </div>
                     
                     <div class="feature-box">
                         <div class="feature-title">WHITE LABEL</div>
                         <div class="feature-subtitle">/ B2C</div>
+                       <a href="/b2c-sites" class="b2bc-btn">
+    <i class="fas fa-info-circle"></i>
+    <span>Know More</span>
+</a>
+
                     </div>
                 </div>
                 

@@ -6,6 +6,9 @@ use App\Http\Controllers\Admin\AuthController;
 
 // Front Page
 Route::get('/', [SiteController::class, 'front'])->name('front');
+Route::get('/b2b-sites',[SiteController::class,'b2b']);
+Route::get('/b2c-sites',[SiteController::class,'b2c']);
+
 
 // Admin Authentication Routes
 Route::prefix('admin')->group(function () {
@@ -23,16 +26,18 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     Route::delete('/delete/{id}', [SiteController::class, 'delete'])->name('sites.delete');
 
 
-  // routes/web.php
-Route::get('/admin/categories',[SiteController::class,'categories'])->name('categories');
-Route::post('/admin/category/update',[SiteController::class,'updateCategory'])->name('category.update');
-Route::post('/admin/category/delete',[SiteController::class,'deleteCategory'])->name('category.delete');
-Route::post('/category/store', [SiteController::class, 'storeCategory'])
-    ->name('category.store');
+    // routes/web.php
+    Route::get('/admin/categories', [SiteController::class, 'categories'])->name('categories');
+    Route::post('/admin/category/update', [SiteController::class, 'updateCategory'])->name('category.update');
+    Route::post('/admin/category/delete', [SiteController::class, 'deleteCategory'])->name('category.delete');
+    Route::post('/category/store', [SiteController::class, 'storeCategory'])
+        ->name('category.store');
 
-    Route::post('/admin/sites/reorder',[SiteController::class,'reorder'])
-->name('sites.reorder');
+    Route::post('/admin/sites/reorder', [SiteController::class, 'reorder'])
+        ->name('sites.reorder');
 
-
+        Route::post('/sites/bulk-type',
+ [SiteController::class,'bulkType'])
+ ->name('sites.bulk.type');
 
 });

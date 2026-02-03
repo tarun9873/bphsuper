@@ -63,7 +63,7 @@
 /* Show after 5 seconds */
 setTimeout(function(){
   document.getElementById("welcomePopup").style.display="flex";
-},3000);
+},4000);
 
 /* Close */
 function closePopup(){

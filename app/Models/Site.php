@@ -10,13 +10,15 @@ class Site extends Model
     use HasFactory;
 
     protected $fillable = [
-    'name',
-    'logo',
-    'url',
-    'market_percentage',
-    'min_percentage',
-    'category'
-];
+        'name',
+        'logo',
+        'url',
+        'market_percentage',
+        'min_percentage',
+        'category',
+        'position',
+        'type'
+    ];
 
 
     public function categoryRelation()

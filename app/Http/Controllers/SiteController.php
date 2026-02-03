@@ -266,4 +266,29 @@ class SiteController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+
+
+    public function bulkType(Request $request)
+    {
+        Site::whereIn('id', $request->ids)
+            ->update(['type' => $request->type]);
+
+        return response()->json(['success' => true]);
+    }
+
+
+
+
+    public function b2b()
+    {
+        $sites = Site::where('type', 'b2b')->get();
+        return view('front-b2b', compact('sites'));
+    }
+
+    public function b2c()
+    {
+        $sites = Site::where('type', 'b2c')->get();
+        return view('front-b2c', compact('sites'));
+    }
 }

@@ -10,6 +10,7 @@
         <!-- Top Bar - Mobile Responsive -->
         <header class="sticky top-0 z-30 glass shadow-sm">
             <div class="px-4 lg:px-6 py-4">
+
                 <div class="flex flex-col md:flex-row md:items-center justify-between space-y-4 md:space-y-0">
                     <!-- Breadcrumb -->
                     <div class="flex items-center space-x-2 text-sm">
@@ -112,7 +113,20 @@
                         <h2 class="text-lg lg:text-xl font-bold text-gray-800">Managed Sites</h2>
                         <p class="text-gray-500 text-xs lg:text-sm mt-1">All websites in your directory</p>
                     </div>
-                    
+                    <div class="flex flex-wrap gap-2 mt-3">
+
+<button onclick="bulkAssign('b2b')"
+class="bulk-btn b2b-btn">
+<i class="fas fa-briefcase"></i> Assign B2B
+</button>
+
+<button onclick="bulkAssign('b2c')"
+class="bulk-btn b2c-btn">
+<i class="fas fa-user"></i> Assign B2C
+</button>
+
+</div>
+
                     <div class="flex items-center space-x-3">
                         @if($sites->count() > 0)
                         <div class="relative">
@@ -137,8 +151,13 @@
 
     <!-- DRAG COLUMN -->
     <th class="py-4 px-3"></th>
+    <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">
+ <input type="checkbox" id="selectAll">Select
+</th>
 
     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">Site</th>
+    
+
     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">Category</th>
     <th class="py-4 px-6 text-left text-xs font-semibold text-gray-600 uppercase">
         Min / Max %
@@ -148,6 +167,7 @@
 
 </tr>
 </thead>
+
 
 <tbody id="sortableSites" class="divide-y divide-gray-100">
 
@@ -161,6 +181,23 @@
     <td class="py-4 px-3 text-gray-400 drag-handle">
         <i class="fas fa-grip-vertical"></i>
     </td>
+<td class="py-4 px-6">
+    <div class="flex items-center gap-2">
+        
+        <input type="checkbox"
+               class="siteCheckbox"
+               value="{{ $site->id }}">
+
+        @if($site->type == 'b2b')
+            <span class="type-badge b2b">B2B</span>
+        @elseif($site->type == 'b2c')
+            <span class="type-badge b2c">B2C</span>
+        @else
+            <span class="type-badge none">None</span>
+        @endif
+
+    </div>
+</td>
 
     <!-- SITE -->
     <td class="py-4 px-6">
@@ -178,6 +215,7 @@
             </div>
         </div>
     </td>
+
 
     <!-- CATEGORY -->
     <td class="py-4 px-6">{{ $site->category }}</td>
@@ -230,9 +268,30 @@
                        <div class="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-300 site-card"
      data-id="{{ $site->id }}"
      data-category="{{ $site->category }}">
-<div class="flex justify-end mb-2 drag-handle text-gray-400">
-    <i class="fas fa-grip-vertical"></i>
+<div class="flex justify-between items-center mb-2">
+
+<div class="flex items-center gap-2">
+
+<input type="checkbox"
+class="siteCheckbox"
+value="{{ $site->id }}">
+
+@if($site->type == 'b2b')
+<span class="type-badge b2b">B2B</span>
+@elseif($site->type == 'b2c')
+<span class="type-badge b2c">B2C</span>
+@else
+<span class="type-badge none">None</span>
+@endif
+
 </div>
+
+<div class="drag-handle text-gray-400">
+<i class="fas fa-grip-vertical"></i>
+</div>
+
+</div>
+
                             <div class="flex items-start justify-between mb-3">
                                 <div class="flex items-center">
                                     <div class="w-10 h-10 rounded-lg overflow-hidden mr-3 border border-gray-200">
@@ -672,5 +731,40 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
+<script>
+document.getElementById("selectAll").addEventListener("change",function(){
+  document.querySelectorAll(".siteCheckbox")
+  .forEach(cb=>cb.checked=this.checked);
+});
+
+function bulkAssign(type){
+
+ let ids=[];
+
+ document.querySelectorAll(".siteCheckbox:checked")
+ .forEach(cb=>ids.push(cb.value));
+
+ if(ids.length==0){
+   alert("Select at least one site");
+   return;
+ }
+
+ fetch("{{ route('sites.bulk.type') }}",{
+  method:"POST",
+  headers:{
+   "Content-Type":"application/json",
+   "X-CSRF-TOKEN":"{{ csrf_token() }}"
+  },
+  body:JSON.stringify({
+    ids:ids,
+    type:type
+  })
+ }).then(()=>{
+   alert("Updated Successfully");
+   location.reload();
+ });
+
+}
+</script>
 
 @endsection

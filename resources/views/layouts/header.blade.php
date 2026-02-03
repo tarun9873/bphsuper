@@ -1084,6 +1084,33 @@
   }
 }
 
+.b2bc-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 10px rgba(79,70,229,0.25);
+}
+
+.b2bc-btn i{
+    font-size: 12px;
+}
+
+.b2bc-btn:hover{
+    background: linear-gradient(135deg, #4338ca, #4f46e5);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(79,70,229,0.35);
+}
+
+
     </style>
 </head>
 <body>
