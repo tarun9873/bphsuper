@@ -152,7 +152,10 @@
 <tbody id="sortableSites" class="divide-y divide-gray-100">
 
 @foreach($sites as $site)
-<tr data-id="{{ $site->id }}" class="hover:bg-gray-50">
+<tr data-id="{{ $site->id }}"
+    data-category="{{ $site->category }}"
+    class="hover:bg-gray-50 site-row">
+
 
     <!-- DRAG HANDLE -->
     <td class="py-4 px-3 text-gray-400 drag-handle">
@@ -595,33 +598,79 @@
 </style>
 
 <script>
-new Sortable(document.getElementById('mobileSortableSites'), {
-    animation: 150,
-    handle: ".drag-handle",
+document.addEventListener("DOMContentLoaded", function () {
 
-    onEnd: function () {
+    /* ======================
+       DESKTOP SORTABLE
+    ====================== */
+    const desktopTable = document.getElementById("sortableSites");
 
-        let order = [];
+    if (desktopTable) {
+        new Sortable(desktopTable, {
+            animation: 150,
+            handle: ".drag-handle",
+            ghostClass: "bg-yellow-100",
 
-        document.querySelectorAll('#mobileSortableSites [data-id]').forEach((card, index) => {
-            order.push({
-                id: card.dataset.id,
-                position: index + 1
-            });
+            onEnd: function () {
+
+                let order = [];
+
+                document.querySelectorAll('#sortableSites tr').forEach((row, index) => {
+                    order.push({
+                        id: row.dataset.id,
+                        position: index + 1
+                    });
+                });
+
+                saveOrder(order);
+            }
         });
+    }
 
+    /* ======================
+       MOBILE SORTABLE
+    ====================== */
+    const mobileList = document.getElementById("mobileSortableSites");
+
+    if (mobileList) {
+        new Sortable(mobileList, {
+            animation: 150,
+            handle: ".drag-handle",
+            ghostClass: "bg-yellow-100",
+
+            onEnd: function () {
+
+                let order = [];
+
+                document.querySelectorAll('#mobileSortableSites [data-id]').forEach((card, index) => {
+                    order.push({
+                        id: card.dataset.id,
+                        position: index + 1
+                    });
+                });
+
+                saveOrder(order);
+            }
+        });
+    }
+
+    /* ======================
+       SAVE ORDER AJAX
+    ====================== */
+    function saveOrder(order) {
         fetch("{{ route('sites.reorder') }}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
             },
-            body: JSON.stringify({order: order})
+            body: JSON.stringify({ order: order })
         });
-
     }
+
 });
 </script>
+
 
 
 @endsection
