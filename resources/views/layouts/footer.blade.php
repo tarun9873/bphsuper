@@ -495,58 +495,121 @@ function closePopup(){
 <script>
 (function(){
 
-/* Disable Right Click */
-document.addEventListener('contextmenu', e => e.preventDefault());
-
-/* Disable Keys */
-document.addEventListener('keydown', function(e){
-
-    if (e.ctrlKey && (
-        e.key === 'u' || 
-        e.key === 's' || 
-        e.key === 'c' || 
-        e.key === 'a' || 
-        e.key === 'v'
-    )) {
-        e.preventDefault();
-    }
-
-    if (e.keyCode === 123) { // F12
-        e.preventDefault();
-    }
-
-    if (e.ctrlKey && e.shiftKey && (
-        e.key === 'i' || 
-        e.key === 'j' || 
-        e.key === 'c'
-    )) {
-        e.preventDefault();
-    }
+/* -------------------- Disable Right Click -------------------- */
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+    return false;
 });
 
-/* Inspect Open Detect */
-setInterval(function(){
-    if(window.outerWidth - window.innerWidth > 200 ||
-       window.outerHeight - window.innerHeight > 200){
+/* -------------------- Disable Text Selection -------------------- */
+document.addEventListener("selectstart", e => e.preventDefault());
+document.addEventListener("copy", e => e.preventDefault());
+document.addEventListener("cut", e => e.preventDefault());
 
+/* -------------------- Disable Drag -------------------- */
+document.addEventListener("dragstart", e => e.preventDefault());
+
+/* -------------------- Block DevTools Keys -------------------- */
+document.addEventListener("keydown", function(e){
+
+    // F12
+    if(e.key === "F12"){
+        e.preventDefault();
+        return false;
+    }
+
+    // Ctrl + Shift + I / J / C
+    if(e.ctrlKey && e.shiftKey && (
+        e.key === "I" || e.key === "i" ||
+        e.key === "J" || e.key === "j" ||
+        e.key === "C" || e.key === "c"
+    )){
+        e.preventDefault();
+        return false;
+    }
+
+    // Ctrl + U (view source)
+    if(e.ctrlKey && (e.key === "u" || e.key === "U")){
+        window.location.href = "/";
+        return false;
+    }
+
+    // Ctrl + S
+    if(e.ctrlKey && (e.key === "s" || e.key === "S")){
+        e.preventDefault();
+        return false;
+    }
+
+    // Ctrl + A
+    if(e.ctrlKey && (e.key === "a" || e.key === "A")){
+        e.preventDefault();
+        return false;
+    }
+
+    // Ctrl + C
+    if(e.ctrlKey && (e.key === "c" || e.key === "C")){
+        e.preventDefault();
+        return false;
+    }
+
+    // Ctrl + V
+    if(e.ctrlKey && (e.key === "v" || e.key === "V")){
+        e.preventDefault();
+        return false;
+    }
+
+});
+
+/* -------------------- DevTools Detect -------------------- */
+function detectDevTools(){
+    const threshold = 160;
+    if (
+        window.outerWidth - window.innerWidth > threshold ||
+        window.outerHeight - window.innerHeight > threshold
+    ){
         document.body.innerHTML = `
-            <div style="background:#000;height:100vh;
-            display:flex;align-items:center;justify-content:center;
-            color:#fff;font-size:22px;font-weight:bold;">
-            ACCESS DENIED
-            </div>
-        `;
+        <div style="
+        background:black;
+        color:white;
+        height:100vh;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:26px;
+        font-weight:bold;
+        letter-spacing:2px;">
+        ACCESS BLOCKED
+        </div>`;
     }
-},1000);
+}
+setInterval(detectDevTools, 500);
 
-/* Disable Image Save */
-document.querySelectorAll("img").forEach(img=>{
-    img.setAttribute("draggable","false");
-    img.addEventListener("contextmenu", e=>e.preventDefault());
-});
+/* -------------------- Disable Console -------------------- */
+(function(){
+    const devtools = /./;
+    devtools.toString = function(){
+        document.body.innerHTML = "<h1 style='color:white;background:black;height:100vh;display:flex;align-items:center;justify-content:center;'>ACCESS BLOCKED</h1>";
+    }
+    console.log(devtools);
+})();
+
+/* -------------------- Disable iframe Opening -------------------- */
+if (window.top !== window.self) {
+    window.top.location = window.self.location;
+}
+
+/* -------------------- Protect Images After Load -------------------- */
+window.onload = function(){
+    document.querySelectorAll("img").forEach(img=>{
+        img.setAttribute("draggable","false");
+        img.style.pointerEvents = "none";
+        img.addEventListener("contextmenu", e=>e.preventDefault());
+    });
+};
 
 })();
 </script>
+
 
 <script>
 document.querySelectorAll("img").forEach(img => {
