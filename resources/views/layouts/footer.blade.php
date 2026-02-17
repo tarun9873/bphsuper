@@ -493,6 +493,62 @@ function closePopup(){
 
 
 <script>
+(function(){
+
+/* Disable Right Click */
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+/* Disable Keys */
+document.addEventListener('keydown', function(e){
+
+    if (e.ctrlKey && (
+        e.key === 'u' || 
+        e.key === 's' || 
+        e.key === 'c' || 
+        e.key === 'a' || 
+        e.key === 'v'
+    )) {
+        e.preventDefault();
+    }
+
+    if (e.keyCode === 123) { // F12
+        e.preventDefault();
+    }
+
+    if (e.ctrlKey && e.shiftKey && (
+        e.key === 'i' || 
+        e.key === 'j' || 
+        e.key === 'c'
+    )) {
+        e.preventDefault();
+    }
+});
+
+/* Inspect Open Detect */
+setInterval(function(){
+    if(window.outerWidth - window.innerWidth > 200 ||
+       window.outerHeight - window.innerHeight > 200){
+
+        document.body.innerHTML = `
+            <div style="background:#000;height:100vh;
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-size:22px;font-weight:bold;">
+            ACCESS DENIED
+            </div>
+        `;
+    }
+},1000);
+
+/* Disable Image Save */
+document.querySelectorAll("img").forEach(img=>{
+    img.setAttribute("draggable","false");
+    img.addEventListener("contextmenu", e=>e.preventDefault());
+});
+
+})();
+</script>
+
+<script>
 document.querySelectorAll("img").forEach(img => {
     img.setAttribute("draggable", "false");
     img.addEventListener("contextmenu", e => e.preventDefault());
