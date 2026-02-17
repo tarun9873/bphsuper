@@ -12,7 +12,7 @@
         <span>Get Panels</span>
     </a>
 
-    <a href="#allpanel"  class="nav-item">
+    <a href="{{route('allpanel')}}"  class="nav-item">
         <i class="fas fa-th-large nav-icon"></i>
         <span>All Panel</span>
     </a>
@@ -89,10 +89,8 @@ const swiper = new Swiper('.swiper', {
     }
 });
 
-// Dropdown functionality
+// Dropdown functionality - WITHOUT $sites variable
 document.addEventListener('DOMContentLoaded', function() {
-    const allSites = {!! json_encode($sites) !!};
-    
     const dropdownHeader = document.getElementById('dropdownHeader');
     const dropdownContent = document.getElementById('dropdownContent');
     const dropdownArrow = document.getElementById('dropdownArrow');
@@ -104,9 +102,28 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedSiteType = "All Site";
     let isDropdownOpen = false;
 
-    // Update total count
+    // DOM se saare sites count karo
+    const allSiteItems = document.querySelectorAll('.site-list .site-item');
+    const totalSites = allSiteItems.length;
+    
     if(totalCountElement) {
-        totalCountElement.textContent = allSites.length;
+        totalCountElement.textContent = totalSites;
+    }
+
+    // DOM se unique categories nikaalo
+    function getCategoriesFromDOM() {
+        const categories = new Set();
+        const categoryCounts = {};
+        
+        allSiteItems.forEach(item => {
+            const category = item.getAttribute('data-category');
+            if (category) {
+                categories.add(category);
+                categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+            }
+        });
+        
+        return { categories: Array.from(categories), categoryCounts };
     }
 
     // Category icon mapping
@@ -124,19 +141,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return iconMap[categoryName] || 'fas fa-globe';
     }
 
-    // Prepare categories data
+    // Categories data prepare karo DOM se
     function prepareCategoriesData() {
-        const categoriesData = [{ name: "All Site", count: allSites.length, icon: "fas fa-globe" }];
-        const categoryMap = new Map();
+        const { categories, categoryCounts } = getCategoriesFromDOM();
+        const categoriesData = [{ 
+            name: "All Site", 
+            count: totalSites, 
+            icon: "fas fa-globe" 
+        }];
         
-        allSites.forEach(site => {
-            if (site.category) {
-                categoryMap.set(site.category, (categoryMap.get(site.category) || 0) + 1);
-            }
-        });
-        
-        categoryMap.forEach((count, category) => {
-            categoriesData.push({ name: category, count: count, icon: getCategoryIcon(category) });
+        categories.forEach(category => {
+            categoriesData.push({ 
+                name: category, 
+                count: categoryCounts[category], 
+                icon: getCategoryIcon(category) 
+            });
         });
         
         return categoriesData;
@@ -176,17 +195,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Select category
     function selectCategory(categoryName) {
         selectedSiteType = categoryName;
-        
-        // Filter sites
         filterSitesByCategory(categoryName);
-        
-        // Update categories
         renderCategories(prepareCategoriesData());
     }
 
-    // Filter sites by category - SIRF INDEX.PHP KE SITES FILTER HONGE
+    // Filter sites by category
     function filterSitesByCategory(categoryName) {
-        // Sirf index.blade.php ke sites select karo
         const siteItems = document.querySelectorAll('.site-list .site-item');
         let visibleCount = 0;
         

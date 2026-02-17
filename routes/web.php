@@ -15,6 +15,11 @@ Route::get('/', [SiteController::class, 'front'])->name('front');
 Route::get('/b2b-sites',[SiteController::class,'b2b']);
 Route::get('/b2c-sites',[SiteController::class,'b2c']);
 
+
+Route::get('/allpanel', function () {
+    return view('allpanelpage');
+})->name('allpanel');
+
 /*
 |--------------------------------------------------------------------------
 | ADMIN AUTH
