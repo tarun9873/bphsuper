@@ -5,17 +5,45 @@
 
     RewriteEngine On
 
-    # Handle Authorization Header
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+# ---------------- BLOCK BAD BOTS ----------------
+RewriteCond %{HTTP_USER_AGENT} (curl|wget|python|scrapy|httpclient|libwww|nikto|sqlmap|crawler|spider|scanner|postman) [NC]
+RewriteRule ^ - [F,L]
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+# ---------------- BLOCK EMPTY USER AGENT ----------------
+RewriteCond %{HTTP_USER_AGENT} ^$
+RewriteRule ^ - [F,L]
 
-    # Send Requests To Front Controller...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
+# ---------------- BLOCK DIRECT IP ACCESS ----------------
+RewriteCond %{HTTP_HOST} ^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$
+RewriteRule ^ - [F,L]
+
+# ---------------- PROTECT ENV & SENSITIVE FILES ----------------
+<FilesMatch "\.(env|log|ini|sql|conf|config|bak|yml|yaml|lock|json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# ---------------- DISABLE HOTLINKING IMAGES ----------------
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https://(www\.)?bphsuper.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F,NC,L]
+
+# ---------------- BLOCK VIEW SOURCE TRICK ----------------
+RewriteCond %{THE_REQUEST} "view-source" [NC]
+RewriteRule ^ - [F]
+
+# ---------------- HANDLE AUTH HEADER ----------------
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# ---------------- REMOVE TRAILING SLASH ----------------
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} (.+)/$
+RewriteRule ^ %1 [L,R=301]
+
+# ---------------- LARAVEL FRONT CONTROLLER ----------------
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+
 </IfModule>

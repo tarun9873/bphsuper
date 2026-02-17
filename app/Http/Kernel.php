@@ -6,6 +6,7 @@ use App\Http\Middleware\AdminAuth;
 use App\Http\Middleware\TrustHosts;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
+
 class Kernel extends HttpKernel
 {
     /**
@@ -23,6 +24,8 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \App\Http\Middleware\AntiInspect::class,
+
     ];
 
     /**
