@@ -12,16 +12,16 @@
         <span>Get Panels</span>
     </a>
 
-    <a href="{{route('allpanel')}}"  class="nav-item">
-        <i class="fas fa-th-large nav-icon"></i>
-        <span>All Panel</span>
-    </a>
+
 
     <a href="https://www.fairplay1.app/" class="nav-item">
         <i class="fas fa-play-circle nav-icon"></i>
         <span>Inplay</span>
     </a>
-
+    <a href="{{route('allpanel')}}"  class="nav-item">
+        <i class="fas fa-th-large nav-icon"></i>
+        <span>All Panel</span>
+    </a>
     <a href="https://walive.link/rustampanelsupport" class="nav-item">
         <i class="fas fa-headset nav-icon"></i>
         <span>Support</span>
