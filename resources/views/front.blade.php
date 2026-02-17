@@ -227,7 +227,7 @@
                         Showing <span id="filteredCount">{{ $sites->count() }}</span> of <span id="totalCount">{{ $sites->count() }}</span> sites
                     </div>
                     
-                    <div class="site-items-container" id="sitesContainer">
+                    <div class="site-items-container" id="sitesContaine           r">
                         @if($sites->count() > 0)
                             @foreach($sites as $site)
                                 <div class="site-item" data-category="{{ $site->category }}">

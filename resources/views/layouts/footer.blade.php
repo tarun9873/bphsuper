@@ -48,8 +48,8 @@
     <h4>Join our social media to stay updated</h4>
 
     <div class="popup-social">
-      <a href="#"><i class="fab fa-telegram"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="https://t.me/bphpanel"><i class="fab fa-telegram"></i></a>
+      <a href="https://www.instagram.com/bphsuper"><i class="fab fa-instagram"></i></a>
       {{-- <a href="#"><i class="fab fa-linkedin"></i></a> --}}
       <a href="https://walive.link/rustampanelsupport"><i class="fab fa-whatsapp"></i></a>
     </div>

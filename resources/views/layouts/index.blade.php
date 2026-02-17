@@ -168,7 +168,7 @@
                     </div>
                 </div>
                 
-                <a href="https://t.me/rustampanel" target="_blank" class="rr-telegram-btn">
+                <a href="https://t.me/bphpanel" target="_blank" class="rr-telegram-btn">
                     <i class="fab fa-telegram telegram-icon"></i>
                     JOIN OFFICIAL TELEGRAM - Join Telegram
                 </a>
