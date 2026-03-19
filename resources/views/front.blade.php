@@ -199,6 +199,16 @@
             <!-- ===== END RR PANEL PROVIDER SECTION ===== -->
 
             <main id="allpanel" class="content">
+
+
+              <!-- ✅ GLOBAL SEARCH -->
+<div class="global-search-box">
+    <div class="search-input">
+        <i class="fas fa-search"></i>
+        <input type="text" id="globalSearch" placeholder="Searcher here">
+    </div>
+</div>
+    <!-- Existing dropdown -->
                 <section class="site-type-dropdown">
                     <div class="dropdown-header" id="dropdownHeader">
                         <div class="dropdown-title">

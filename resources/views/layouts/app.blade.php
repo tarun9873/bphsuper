@@ -53,6 +53,29 @@
     {{-- FOOTER --}}
     @include('layouts.footer')
 
-   
+   <script>
+    document.getElementById("globalSearch").addEventListener("keyup", function () {
+    let filter = this.value.toLowerCase();
+    let sites = document.querySelectorAll(".site-item");
+
+    let visibleCount = 0;
+
+    sites.forEach(site => {
+        let name = site.querySelector(".site-name-full")?.innerText.toLowerCase() || "";
+        let domain = site.querySelector(".site-domain")?.innerText.toLowerCase() || "";
+        let category = site.getAttribute("data-category")?.toLowerCase() || "";
+
+        if (name.includes(filter) || domain.includes(filter) || category.includes(filter)) {
+            site.style.display = "block";
+            visibleCount++;
+        } else {
+            site.style.display = "none";
+        }
+    });
+
+    // Update count
+    document.getElementById("filteredCount").innerText = visibleCount;
+});
+   </script>
 </body>
 </html>

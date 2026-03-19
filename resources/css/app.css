@@ -1,0 +1,21 @@
+.global-search-box {
+    margin-bottom: 15px;
+}
+
+.global-search-box .search-input {
+    display: flex;
+    align-items: center;
+    background: #1a1a2e;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.global-search-box input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    outline: none;
+    margin-left: 10px;
+}
