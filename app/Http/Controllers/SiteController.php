@@ -7,6 +7,7 @@ use App\Models\Site;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class SiteController extends Controller
 {
@@ -345,55 +346,45 @@ class SiteController extends Controller
 
     // ✅ STORE BLOG
     public function blogStore(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-            'meta_title' => 'nullable|max:1160',
-            'meta_description' => 'nullable|max:1160',
-            'meta_keywords' => 'nullable|max:1255',
-            'focus_keyphrase' => 'nullable|max:1255'  // Add this if you have this field
-        ]);
+{
+    $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'required',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+    ]);
 
-        // 🔥 SLUG GENERATE + DUPLICATE FIX
-        $slug = Str::slug($request->title);
-        $originalSlug = $slug;
-        $count = 1;
+    // ✅ SLUG
+    $slug = Str::slug($request->title);
+    $originalSlug = $slug;
+    $count = 1;
 
-        while (Blog::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $count++;
-        }
-
-        // 🔥 IMAGE UPLOAD
-        $imageName = null;
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/blogs'), $imageName);
-        }
-
-        Blog::create([
-            'title' => $request->title,
-            'slug' => $slug,
-            'image' => $imageName,
-            'description' => $request->description,
-
-            // SEO
-            'meta_title' => $request->meta_title ?? $request->title,
-
-            'meta_description' => $request->meta_description
-                ?? Str::limit(strip_tags($request->description), 150),
-
-            'meta_keywords' => $request->meta_keywords
-                ?? $request->title,
-
-            // ✅ ADD THIS
-            'focus_keyphrase' => $request->focus_keyphrase,
-        ]);
-
-        return redirect()->route('admin.blogs')->with('success', 'Blog created successfully!');
+    while (Blog::where('slug', $slug)->exists()) {
+        $slug = $originalSlug . '-' . $count++;
     }
+
+    // ✅ IMAGE UPLOAD (BEST METHOD)
+    $imageName = null;
+
+    if ($request->hasFile('image')) {
+        $imageName = $request->file('image')->store('blogs', 'public');
+    }
+
+    // ✅ SAVE DATA
+    Blog::create([
+        'title' => $request->title,
+        'slug' => $slug,
+        'image' => $imageName,
+        'description' => $request->description,
+
+        'meta_title' => $request->meta_title ?? $request->title,
+        'meta_description' => $request->meta_description 
+            ?? Str::limit(strip_tags($request->description), 150),
+        'meta_keywords' => $request->meta_keywords ?? $request->title,
+        'focus_keyphrase' => $request->focus_keyphrase,
+    ]);
+
+    return redirect()->back()->with('success', 'Blog created successfully!');
+}
 
     // ✅ UPDATE BLOG
     public function updateBlog(Request $request, $id)
