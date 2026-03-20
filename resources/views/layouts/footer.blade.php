@@ -287,5 +287,18 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
+
+<script>
+function openMenu() {
+    document.getElementById("mobileMenu").classList.add("active");
+    document.querySelector(".menu-overlay").classList.add("active");
+}
+
+function closeMenu() {
+    document.getElementById("mobileMenu").classList.remove("active");
+    document.querySelector(".menu-overlay").classList.remove("active");
+}
+</script>
+
 </body>
 </html>

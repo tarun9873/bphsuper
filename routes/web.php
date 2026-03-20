@@ -65,3 +65,14 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     Route::post('/sites/bulk-type',[SiteController::class,'bulkType'])->name('sites.bulk.type');
 
 });
+
+
+/* BLOG PAGE */
+Route::get('/blog', function () {
+    return view('blog.blog'); // resources/views/blog.blade.php
+})->name('blog');
+
+/* CONTACT PAGE */
+Route::get('/contact', function () {
+    return view('blog.contact'); // resources/views/contact.blade.php
+})->name('contact');

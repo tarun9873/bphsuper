@@ -1109,7 +1109,151 @@
     transform: translateY(-1px);
     box-shadow: 0 6px 14px rgba(79,70,229,0.35);
 }
+/* ===============================
+   🔥 MOBILE SLIDE MENU FULL CSS
+================================ */
 
+/* Hamburger Icon */
+.menu-toggle {
+    font-size: 22px;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+}
+
+/* Overlay Background */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(3px);
+    display: none;
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+.menu-overlay.active {
+    display: block;
+}
+
+/* Sidebar Menu */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100%;
+    background: #0d0d0dde;
+    z-index: 1001;
+    transition: all 0.35s ease;
+    padding: 20px 15px;
+    box-shadow: 5px 0 25px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Active State */
+.mobile-menu.active {
+    left: 0;
+}
+
+/* Menu Header */
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.menu-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.menu-header span {
+    font-size: 22px;
+    cursor: pointer;
+    color: #fff;
+}
+
+/* Menu List */
+.mobile-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Menu Items */
+.mobile-menu ul li {
+    margin: 18px 0;
+}
+
+/* Links */
+.mobile-menu ul li a {
+   display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ccc;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 9px 9px;
+    border: 1px solid #3f3f3f;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.mobile-menu ul li a:hover {
+    background: #1a1a1a;
+    color: #fff;
+    transform: translateX(6px);
+}
+
+/* Active Menu Item */
+.mobile-menu ul li a.active {
+    background: linear-gradient(135deg, #e99f19, #ffb400);
+    color: #000;
+    font-weight: 600;
+}
+
+/* Divider (Optional) */
+.menu-divider {
+    height: 1px;
+    background: #222;
+    margin: 15px 0;
+}
+
+/* Footer (Optional) */
+.menu-footer {
+    margin-top: auto;
+    font-size: 12px;
+    color: #888;
+    text-align: center;
+}
+
+/* ===============================
+   📱 MOBILE OPTIMIZATION
+================================ */
+@media(max-width: 768px){
+    .mobile-menu {
+        width: 240px;
+    }
+}
+
+/* ===============================
+   💻 DESKTOP HIDE MENU
+================================ */
+@media(min-width: 769px){
+    .menu-toggle {
+        display: none;
+    }
+}
 
     </style>
 </head>
@@ -1128,7 +1272,45 @@
                     <button class="get-id-btn" onclick="window.location.href='https://walive.link/rustampanel'">
                         <i class="fas fa-id-card"></i> Get Panel
                     </button>
+
+                      <!-- Hamburger Menu -->
+    <div class="menu-toggle" onclick="openMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
                 </div>
+
+                <!-- Overlay -->
+<div class="menu-overlay" onclick="closeMenu()"></div>
+
+<!-- Sidebar -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="menu-header">
+        <h3>Menu</h3>
+        <span onclick="closeMenu()">✖</span>
+    </div>
+
+    <ul>
+       <ul>
+    <li>
+        <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">
+            🏠 Home
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ url('/blog') }}" class="{{ request()->is('blog*') ? 'active' : '' }}">
+            👤 Latest Blog
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ url('/contact') }}" class="{{ request()->is('contact') ? 'active' : '' }}">
+            📞 Contact
+        </a>
+    </li>
+</ul>
+    </ul>
+</div>
                 
                 <div class="demo-id">Your Trusted Hub for iGaming Masters, Super Masters & White-Label Solutions</div>
             </div>
