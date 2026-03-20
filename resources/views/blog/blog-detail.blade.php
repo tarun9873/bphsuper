@@ -23,7 +23,7 @@
     <!-- BLOG IMAGE -->
     @if($blog->image)
         <div class="blog-image-box">
-            <img src="{{ asset('storage/blogs/'.$blog->image) }}" alt="{{ $blog->title }}">
+            <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
         </div>
     @endif
 
