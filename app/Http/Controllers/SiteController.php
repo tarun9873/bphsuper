@@ -306,4 +306,11 @@ class SiteController extends Controller
 
         return back()->with('success', 'Form Submitted Successfully!');
     }
+
+
+    public function contacts()
+{
+    $contacts = Contact::latest()->get();
+    return view('admin.contacts', compact('contacts'));
+}
 }

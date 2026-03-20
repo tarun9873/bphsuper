@@ -63,6 +63,9 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     /* BULK B2B / B2C */
 
     Route::post('/sites/bulk-type',[SiteController::class,'bulkType'])->name('sites.bulk.type');
+/* BLOG PAGE */
+
+    Route::get('/admin/contacts', [SiteController::class, 'contacts'])->name('admin.contacts');
 
 });
 

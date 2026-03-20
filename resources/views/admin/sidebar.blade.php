@@ -56,6 +56,17 @@
                 <span class="ml-auto w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
                 @endif
             </a>
+
+             <!-- Sites Management Link -->
+            <a href="{{ route('admin.contacts') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin') ? 'bg-gradient-to-r from-primary-500/20 to-primary-500/5 border border-primary-500/30 text-primary-500' : 'text-gray-300 hover:text-white hover:bg-white/5' }} transition-all duration-300 group">
+                <i class="fas fa-globe w-5 text-center"></i>
+                <span class="font-medium">
+                    Contact Data
+                </span>
+                @if(request()->routeIs('admin'))
+                <span class="ml-auto w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+                @endif
+            </a>
         </nav>
     </div>
 
