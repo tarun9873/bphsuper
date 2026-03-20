@@ -76,3 +76,5 @@ Route::get('/blog', function () {
 Route::get('/contact', function () {
     return view('blog.contact'); // resources/views/contact.blade.php
 })->name('contact');
+
+Route::post('/contact-submit', [SiteController::class, 'contactSubmit'])->name('contact.submit');

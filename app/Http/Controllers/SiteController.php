@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\Site;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SiteController extends Controller
 {
     public function __construct()
-{
-    $this->middleware('admin.auth')->except(['front','b2b','b2c']);
-}
+    {
+        $this->middleware('admin.auth')->except(['front', 'b2b', 'b2c']);
+    }
 
     /* ======================
         FRONT PAGE with categories
@@ -285,5 +287,23 @@ class SiteController extends Controller
     {
         $sites = Site::where('type', 'b2c')->get();
         return view('front-b2c', compact('sites'));
+    }
+
+    public function contactSubmit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'number' => 'required',
+        ]);
+
+        // ✅ ONLY SAVE IN DATABASE
+        Contact::create([
+            'name' => $request->name,
+            'number' => $request->number,
+            'website' => $request->website,
+            'message' => $request->message,
+        ]);
+
+        return back()->with('success', 'Form Submitted Successfully!');
     }
 }
