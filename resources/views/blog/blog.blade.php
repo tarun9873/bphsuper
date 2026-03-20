@@ -24,7 +24,7 @@
                         <!-- Blog Image -->
                         <div class="blog-image">
     @if($blog->image && file_exists(public_path($blog->image)))
-        <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
+     <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
     @else
         <div class="no-image">
             <i class="fas fa-image"></i>
