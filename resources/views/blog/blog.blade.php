@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="all-blogs-page">
-    <div class="container">
+    <div class="container pancon">
         
 
         <!-- Search Bar -->
@@ -71,16 +71,16 @@
 
 @endif
 <style>
+    .pancon{
+        margin: 0 auto;
+padding: 0 20px;}
+    
     .all-blogs-page {
        
         padding: 40px 0;
     }
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
+    
 
     /* Hero */
     .blog-hero {
