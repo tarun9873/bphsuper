@@ -17,14 +17,9 @@
         </div> --}}
 
         <!-- Blogs Grid -->
-        @if($blogs->count() > 0)
-            <div class="blogs-grid" id="blogsGrid">
-                @foreach($blogs as $blog)
-                    <div class="blog-card" data-title="{{ strtolower($blog->title) }}">
-                        <!-- Blog Image -->
-                        <div class="blog-image">
-    @if($blog->image && file_exists(public_path($blog->image)))
-     <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
+       <div class="blog-image">
+    @if($blog->image)
+        <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
     @else
         <div class="no-image">
             <i class="fas fa-image"></i>
