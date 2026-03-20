@@ -8,7 +8,7 @@
 
 @section('meta_keywords', $blog->meta_keywords)
 
-@section('meta_image', asset('storage/blogs/'.$blog->image))
+@section('meta_image', asset($blog->image))
 @endsection
 
 @section('content')
@@ -21,11 +21,11 @@
     </h1>
 
     <!-- BLOG IMAGE -->
-    @if($blog->image)
-        <div class="blog-image-box">
-            <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
-        </div>
-    @endif
+  @if($blog->image)
+    <div class="blog-image-box">
+        <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
+    </div>
+@endif
 
     <!-- BLOG CONTENT -->
     <div class="blog-content">
