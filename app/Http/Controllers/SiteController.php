@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Site;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
+use App\Models\Blog;
+use Illuminate\Support\Str;
 
 class SiteController extends Controller
 {
@@ -309,8 +310,186 @@ class SiteController extends Controller
 
 
     public function contacts()
-{
-    $contacts = Contact::latest()->get();
-    return view('admin.contacts', compact('contacts'));
-}
+    {
+        $contacts = Contact::latest()->get();
+        return view('admin.contacts', compact('contacts'));
+    }
+
+
+
+    /* ======================
+    BLOG METHODS (FINAL)
+======================*/
+
+    // ✅ ADMIN: Blog List
+    public function blogs()
+    {
+        $blogs = Blog::latest()->get();
+        return view('admin.add-blog', compact('blogs'));
+    }
+
+    // ✅ ADMIN: Create Page
+    public function createBlog()
+    {
+        $blogs = Blog::latest()->get();
+        return view('admin.add-blog', compact('blogs'));
+    }
+
+    // ✅ ADMIN: Edit Blog
+    public function editBlog($id)
+    {
+        $blog = Blog::findOrFail($id);
+        $blogs = Blog::latest()->get();
+        return view('admin.add-blog', compact('blog', 'blogs'));
+    }
+
+    // ✅ STORE BLOG
+    public function blogStore(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'focus_keyphrase' => $request->focus_keyphrase,
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120'
+        ]);
+
+        // 🔥 SLUG GENERATE + DUPLICATE FIX
+        $slug = Str::slug($request->title);
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (Blog::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count++;
+        }
+
+        // 🔥 IMAGE UPLOAD
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $imageName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('storage/blogs'), $imageName);
+        }
+
+        Blog::create([
+            'title' => $request->title,
+            'slug' => $slug,
+            'image' => $imageName,
+            'description' => $request->description,
+
+            // SEO
+            'meta_title' => $request->meta_title ?? $request->title,
+
+            'meta_description' => $request->meta_description
+                ?? Str::limit(strip_tags($request->description), 150),
+
+            'meta_keywords' => $request->meta_keywords
+                ?? $request->title,
+
+            // ✅ ADD THIS
+            'focus_keyphrase' => $request->focus_keyphrase,
+        ]);
+
+        return redirect()->route('admin.blogs')->with('success', 'Blog created successfully!');
+    }
+
+    // ✅ UPDATE BLOG
+    public function updateBlog(Request $request, $id)
+    {
+        $blog = Blog::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'focus_keyphrase' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120'
+        ]);
+
+        // 🔥 SLUG UPDATE
+        $slug = Str::slug($request->title);
+
+        if ($slug !== $blog->slug) {
+            $originalSlug = $slug;
+            $count = 1;
+
+            while (Blog::where('slug', $slug)->where('id', '!=', $id)->exists()) {
+                $slug = $originalSlug . '-' . $count++;
+            }
+
+            $blog->slug = $slug;
+        }
+
+        // 🔥 IMAGE UPDATE
+        if ($request->hasFile('image')) {
+
+            // delete old
+            if ($blog->image && file_exists(public_path('storage/blogs/' . $blog->image))) {
+                unlink(public_path('storage/blogs/' . $blog->image));
+            }
+
+            $file = $request->file('image');
+            $imageName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('storage/blogs'), $imageName);
+
+            $blog->image = $imageName;
+        }
+
+        $blog->title = $request->title;
+        $blog->description = $request->description;
+
+        // SEO
+        $blog->meta_title = $request->meta_title ?? $request->title;
+
+        $blog->meta_description = $request->meta_description
+            ?? Str::limit(strip_tags($request->description), 150);
+        $blog->focus_keyphrase = $request->focus_keyphrase;
+        $blog->meta_keywords = $request->meta_keywords
+            ?? $request->title;
+
+
+
+
+
+        $blog->save();
+
+        return redirect()->route('admin.blogs')->with('success', 'Blog updated successfully!');
+    }
+
+    // ✅ DELETE BLOG
+    public function blogDelete($id)
+    {
+        $blog = Blog::findOrFail($id);
+
+        // delete image
+        if ($blog->image && file_exists(public_path('storage/blogs/' . $blog->image))) {
+            unlink(public_path('storage/blogs/' . $blog->image));
+        }
+
+        $blog->delete();
+
+        return back()->with('success', 'Blog deleted successfully!');
+    }
+
+    /* ======================
+    FRONTEND BLOG
+======================*/
+
+    // ✅ BLOG LIST (with pagination)
+    public function blogList()
+    {
+        $blogs = Blog::latest()->paginate(9);
+        return view('blog.blog', compact('blogs'));
+    }
+
+    // ✅ BLOG DETAIL
+    public function blogDetail($slug)
+    {
+        $blog = Blog::where('slug', $slug)->firstOrFail();
+
+        $relatedBlogs = Blog::where('id', '!=', $blog->id)
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        return view('blog.blog-detail', compact('blog', 'relatedBlogs'));
+    }
 }

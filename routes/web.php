@@ -12,8 +12,8 @@ use App\Http\Controllers\Admin\AuthController;
 
 Route::get('/', [SiteController::class, 'front'])->name('front');
 
-Route::get('/b2b-sites',[SiteController::class,'b2b']);
-Route::get('/b2c-sites',[SiteController::class,'b2c']);
+Route::get('/b2b-sites', [SiteController::class, 'b2b']);
+Route::get('/b2c-sites', [SiteController::class, 'b2c']);
 
 
 Route::get('/allpanel', function () {
@@ -31,7 +31,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
-
 });
 
 /*
@@ -62,18 +61,30 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
 
     /* BULK B2B / B2C */
 
-    Route::post('/sites/bulk-type',[SiteController::class,'bulkType'])->name('sites.bulk.type');
-/* BLOG PAGE */
+    Route::post('/sites/bulk-type', [SiteController::class, 'bulkType'])->name('sites.bulk.type');
+    /* BLOG PAGE */
 
     Route::get('/contacts', [SiteController::class, 'contacts'])->name('admin.contacts');
 
+// blog route for admin panel
+    Route::get('/blogs', [SiteController::class, 'blogs'])->name('admin.blogs');
+
+    Route::get('/blog/create', [SiteController::class, 'createBlog'])->name('admin.blogs.create');
+
+    Route::post('/blog/store', [SiteController::class, 'blogStore'])->name('blog.store');
+
+    Route::get('/blogs/edit/{id}', [SiteController::class, 'editBlog'])->name('blog.edit');
+
+    Route::post('/blog/update/{id}', [SiteController::class, 'updateBlog'])->name('blog.update');
+
+    Route::delete('/blog/delete/{id}', [SiteController::class, 'blogDelete'])->name('blog.delete');
 });
 
+// Frontend Blog Routes
+Route::get('/blog', [SiteController::class, 'blogList'])->name('blog');
+Route::get('/blog/{slug}', [SiteController::class, 'blogDetail'])->name('blog.detail');
 
-/* BLOG PAGE */
-Route::get('/blog', function () {
-    return view('blog.blog'); // resources/views/blog.blade.php
-})->name('blog');
+
 
 /* CONTACT PAGE */
 Route::get('/contact', function () {
