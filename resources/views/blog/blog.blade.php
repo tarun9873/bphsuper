@@ -17,59 +17,59 @@
         </div> --}}
 
         <!-- Blogs Grid -->
-       <div class="blog-image">
-    @if($blog->image)
-        <img src="{{ asset('storage/' . $blog->image) }}" alt="{{ $blog->title }}">
-    @else
-        <div class="no-image">
-            <i class="fas fa-image"></i>
-        </div>
-    @endif
-</div>
+       @if($blogs->count() > 0)
 
-                        <!-- Blog Content -->
-                        <div class="blog-content">
-                            <div class="blog-meta">
-                                <span><i class="far fa-calendar-alt"></i> {{ $blog->created_at->format('M d, Y') }}</span>
-                                <span><i class="far fa-clock"></i> {{ ceil(str_word_count(strip_tags($blog->description)) / 200) }} min read</span>
-                            </div>
-                            
-                            <h2 class="blog-title">
-                                <a href="{{ route('blog.detail', $blog->slug) }}">{{ $blog->title }}</a>
-                            </h2>
-                            
-                            <p class="blog-excerpt">
-                                {{ Str::limit(strip_tags($blog->description), 120) }}
-                            </p>
-                            
-                            <a href="{{ route('blog.detail', $blog->slug) }}" class="read-more">
-                                Read More <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+<div class="blogs-grid" id="blogsGrid">
 
-            <!-- Pagination -->
-            @if(method_exists($blogs, 'links'))
-                <div class="pagination">
-                    {{ $blogs->links() }}
+    @foreach($blogs as $blog)
+
+    <div class="blog-card">
+
+        <!-- Blog Image -->
+        <div class="blog-image">
+            @if($blog->image)
+                <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
+            @else
+                <div class="no-image">
+                    <i class="fas fa-image"></i>
                 </div>
             @endif
+        </div>
 
-            <div class="results-count">
-                Showing {{ $blogs->count() }} blogs
+        <!-- Blog Content -->
+        <div class="blog-content">
+            <div class="blog-meta">
+                <span>{{ $blog->created_at->format('M d, Y') }}</span>
             </div>
-        @else
-            <div class="empty-state">
-                <i class="fas fa-blog"></i>
-                <h3>No Blogs Found</h3>
-                <p>Check back soon for new articles!</p>
-            </div>
-        @endif
+
+            <h2 class="blog-title">
+                <a href="{{ route('blog.detail', $blog->slug) }}">
+                    {{ $blog->title }}
+                </a>
+            </h2>
+
+            <p class="blog-excerpt">
+                {{ Str::limit(strip_tags($blog->description), 120) }}
+            </p>
+
+            <a href="{{ route('blog.detail', $blog->slug) }}" class="read-more">
+                Read More
+            </a>
+        </div>
+
     </div>
+
+    @endforeach
+
 </div>
 
+@else
+
+<div class="empty-state">
+    <h3>No Blogs Found</h3>
+</div>
+
+@endif
 <style>
     .all-blogs-page {
        
