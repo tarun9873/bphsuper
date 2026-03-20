@@ -346,45 +346,53 @@ class SiteController extends Controller
 
     // ✅ STORE BLOG
     public function blogStore(Request $request)
-{
-    $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-    ]);
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+        ]);
 
-    // ✅ SLUG
-    $slug = Str::slug($request->title);
-    $originalSlug = $slug;
-    $count = 1;
+        // ✅ SLUG
+        $slug = Str::slug($request->title);
+        $originalSlug = $slug;
+        $count = 1;
 
-    while (Blog::where('slug', $slug)->exists()) {
-        $slug = $originalSlug . '-' . $count++;
+        while (Blog::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count++;
+        }
+
+        // ✅ IMAGE UPLOAD (BEST METHOD)
+        $imageName = null;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            $imageName = time() . '.' . $file->getClientOriginalExtension();
+
+            // SAVE DIRECT IN PUBLIC
+            $file->move(public_path('blogs'), $imageName);
+
+            // SAVE PATH IN DB
+            $imageName = 'blogs/' . $imageName;
+        }
+
+        // ✅ SAVE DATA
+        Blog::create([
+            'title' => $request->title,
+            'slug' => $slug,
+            'image' => $imageName,
+            'description' => $request->description,
+
+            'meta_title' => $request->meta_title ?? $request->title,
+            'meta_description' => $request->meta_description
+                ?? Str::limit(strip_tags($request->description), 150),
+            'meta_keywords' => $request->meta_keywords ?? $request->title,
+            'focus_keyphrase' => $request->focus_keyphrase,
+        ]);
+
+        return redirect()->back()->with('success', 'Blog created successfully!');
     }
-
-    // ✅ IMAGE UPLOAD (BEST METHOD)
-    $imageName = null;
-
-    if ($request->hasFile('image')) {
-        $imageName = $request->file('image')->store('blogs', 'public');
-    }
-
-    // ✅ SAVE DATA
-    Blog::create([
-        'title' => $request->title,
-        'slug' => $slug,
-        'image' => $imageName,
-        'description' => $request->description,
-
-        'meta_title' => $request->meta_title ?? $request->title,
-        'meta_description' => $request->meta_description 
-            ?? Str::limit(strip_tags($request->description), 150),
-        'meta_keywords' => $request->meta_keywords ?? $request->title,
-        'focus_keyphrase' => $request->focus_keyphrase,
-    ]);
-
-    return redirect()->back()->with('success', 'Blog created successfully!');
-}
 
     // ✅ UPDATE BLOG
     public function updateBlog(Request $request, $id)
@@ -422,9 +430,8 @@ class SiteController extends Controller
 
             $file = $request->file('image');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('storage/blogs'), $imageName);
-
-            $blog->image = $imageName;
+            $file->move(public_path('blogs'), $imageName);
+            $blog->image = 'blogs/' . $imageName;
         }
 
         $blog->title = $request->title;
