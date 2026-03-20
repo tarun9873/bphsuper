@@ -13,7 +13,8 @@ class SiteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin.auth')->except(['front', 'b2b', 'b2c']);
+        $this->middleware('admin.auth')->except(['front', 'b2b', 'b2c', 'blogList',
+        'blogDetail']);
     }
 
     /* ======================
