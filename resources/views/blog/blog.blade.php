@@ -23,14 +23,14 @@
                     <div class="blog-card" data-title="{{ strtolower($blog->title) }}">
                         <!-- Blog Image -->
                         <div class="blog-image">
-                            @if($blog->image && file_exists(public_path('storage/blogs/' . $blog->image)))
-                                <img src="{{ asset('storage/blogs/' . $blog->image) }}" alt="{{ $blog->title }}">
-                            @else
-                                <div class="no-image">
-                                    <i class="fas fa-image"></i>
-                                </div>
-                            @endif
-                        </div>
+    @if($blog->image && file_exists(public_path($blog->image)))
+        <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
+    @else
+        <div class="no-image">
+            <i class="fas fa-image"></i>
+        </div>
+    @endif
+</div>
 
                         <!-- Blog Content -->
                         <div class="blog-content">
