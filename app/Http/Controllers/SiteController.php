@@ -350,10 +350,10 @@ class SiteController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
-            'meta_title' => 'nullable|max:160',
-            'meta_description' => 'nullable|max:160',
-            'meta_keywords' => 'nullable|max:255',
-            'focus_keyphrase' => 'nullable|max:255'  // Add this if you have this field
+            'meta_title' => 'nullable|max:1160',
+            'meta_description' => 'nullable|max:1160',
+            'meta_keywords' => 'nullable|max:1255',
+            'focus_keyphrase' => 'nullable|max:1255'  // Add this if you have this field
         ]);
 
         // 🔥 SLUG GENERATE + DUPLICATE FIX
