@@ -55,7 +55,7 @@
 
 <div class="contact-container">
 
-    <h2>Contact Us</h2>
+    <h2>Contact Enquiry Us</h2>
 
     {{-- SUCCESS MESSAGE --}}
     @if(session('success'))

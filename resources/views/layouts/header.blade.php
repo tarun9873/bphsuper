@@ -1305,7 +1305,7 @@
 
     <li>
         <a href="{{ url('/contact') }}" class="{{ request()->is('contact') ? 'active' : '' }}">
-            📞 Contact
+            📞 Contact Enquiry
         </a>
     </li>
 </ul>
