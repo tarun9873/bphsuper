@@ -1251,7 +1251,7 @@
 ================================ */
 @media(min-width: 769px){
     .menu-toggle {
-        display: none;
+        /* display: none; */
     }
 }
 
