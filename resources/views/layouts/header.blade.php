@@ -1242,7 +1242,7 @@
 ================================ */
 @media(max-width: 768px){
     .mobile-menu {
-        width: 240px;
+        width: 280px;
     }
 }
 

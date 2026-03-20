@@ -267,8 +267,6 @@ class SiteController extends Controller
         return response()->json(['success' => true]);
     }
 
-
-
     public function bulkType(Request $request)
     {
         Site::whereIn('id', $request->ids)
@@ -276,9 +274,6 @@ class SiteController extends Controller
 
         return response()->json(['success' => true]);
     }
-
-
-
 
     public function b2b()
     {
