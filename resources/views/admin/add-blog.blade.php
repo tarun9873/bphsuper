@@ -1,190 +1,10 @@
 @extends('admin.header')
 
-
-
+@section('title', isset($blog) ? 'Edit Blog' : 'Add New Blog')
 
 @section('content')
 
 @include('admin.sidebar')
-
-<div class="add-blog-page">
-    <div class="container">
-       
-
-        <!-- Success Message with Animation -->
-        @if(session('success'))
-            <div class="alert alert-success slide-in">
-                <div class="alert-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="alert-content">
-                    <strong>Success!</strong> {{ session('success') }}
-                </div>
-                <button class="alert-close" onclick="this.parentElement.remove()">×</button>
-            </div>
-        @endif
-
-        <!-- Error Messages -->
-        @if($errors->any())
-            <div class="alert alert-danger slide-in">
-                <div class="alert-icon">
-                    <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <div class="alert-content">
-                    <strong>Please fix the following errors:</strong>
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li><i class="fas fa-times-circle"></i> {{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                <button class="alert-close" onclick="this.parentElement.remove()">×</button>
-            </div>
-        @endif
-
-        <!-- Blog Form -->
-        <div class="blog-form-card">
-            <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data" id="blogForm">
-                @csrf
-                
-                <div class="form-tabs">
-                    <button type="button" class="tab-btn active" data-tab="content">
-                        <i class="fas fa-edit"></i> Content
-                    </button>
-                    <button type="button" class="tab-btn" data-tab="seo">
-                        <i class="fas fa-chart-line"></i> SEO
-                    </button>
-                    <button type="button" class="tab-btn" data-tab="preview">
-                        <i class="fas fa-eye"></i> Preview
-                    </button>
-                </div>
-
-                <!-- Content Tab -->
-                <div class="tab-content active" id="content-tab">
-                    <!-- Title -->
-                    <div class="form-group">
-                        <label>Blog Title <span class="required">*</span></label>
-                        <input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" required placeholder="Enter an engaging title...">
-                        <div class="input-footer">
-                            <small><i class="fas fa-info-circle"></i> Use a clear, descriptive title</small>
-                            <small class="char-counter" id="titleCounter">0/100 characters</small>
-                        </div>
-                    </div>
-
-                    <!-- Slug Preview -->
-                    <div class="form-group">
-                        <label>URL Slug</label>
-                        <div class="slug-preview">
-                            <span>{{ url('/blog') }}/</span>
-                            <span id="slugPreview">your-blog-title</span>
-                        </div>
-                        <small><i class="fas fa-info-circle"></i> Auto-generated from title</small>
-                    </div>
-
-                    <!-- Featured Image -->
-                    <div class="form-group">
-                        <label>Featured Image</label>
-                        <div class="image-upload-box">
-                            <input type="file" name="image" id="imageInput" accept="image/jpeg,image/png,image/jpg,image/webp">
-                            <div class="image-preview" id="imagePreview">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Click or drag image here</p>
-                                <span>JPG, PNG, WebP (Max 5MB)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Content -->
-                    <div class="form-group">
-                        <label>Content <span class="required">*</span></label>
-                        <textarea name="description" id="editor" required>{{ old('description') }}</textarea>
-                        <small><i class="fas fa-info-circle"></i> Write your blog content here. Use the editor toolbar for formatting.</small>
-                    </div>
-                </div>
-
-                <!-- SEO Tab -->
-                <div class="tab-content" id="seo-tab">
-                    <div class="seo-tip">
-                        <i class="fas fa-lightbulb"></i>
-                        <p>Optimize your blog for search engines. Good SEO helps people find your content!</p>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Meta Title</label>
-                        <input type="text" name="meta_title" id="meta_title" class="form-control" value="{{ old('meta_title') }}" placeholder="SEO Title (recommended: 50-60 characters)">
-                        <div class="input-footer">
-                            <small><i class="fas fa-info-circle"></i> This appears in search results as the title</small>
-                            <small class="char-counter" id="metaTitleCount">0/60 characters</small>
-                        </div>
-                        <div class="seo-preview" id="metaTitlePreview">
-                            <span>Google Preview:</span>
-                            <p id="titlePreviewText">Your blog title will appear here</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Meta Description</label>
-                        <textarea name="meta_description" id="meta_description" class="form-control" rows="3" placeholder="Brief summary for search results (recommended: 150-160 characters)">{{ old('meta_description') }}</textarea>
-                        <div class="input-footer">
-                            <small><i class="fas fa-info-circle"></i> This appears below the title in search results</small>
-                            <small class="char-counter" id="metaDescCount">0/160 characters</small>
-                        </div>
-                        <div class="seo-preview">
-                            <span>Google Preview:</span>
-                            <p id="descPreviewText">Your meta description will appear here. This is what users see in search results.</p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Meta Keywords</label>
-                        <input type="text" name="meta_keywords" class="form-control" value="{{ old('meta_keywords') }}" placeholder="keyword1, keyword2, keyword3">
-                        <small><i class="fas fa-info-circle"></i> Separate keywords with commas</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Focus Keyphrase</label>
-                        <input type="text" name="focus_keyphrase" id="focusKeyphrase" class="form-control" placeholder="Main keyword for this blog">
-                        <small><i class="fas fa-info-circle"></i> Helps optimize your content for specific keywords</small>
-                    </div>
-                </div>
-
-                <!-- Preview Tab -->
-                <div class="tab-content" id="preview-tab">
-                    <div class="preview-card">
-                        <h4>Live Preview</h4>
-                        <div id="livePreview">
-                            <div class="preview-image">
-                                <i class="fas fa-image"></i>
-                                <span>Featured Image Preview</span>
-                            </div>
-                            <h2 id="previewTitle">Your Blog Title</h2>
-                            <div class="preview-meta">
-                                <span><i class="far fa-calendar"></i> {{ date('M d, Y') }}</span>
-                                <span><i class="far fa-clock"></i> Estimated read time</span>
-                            </div>
-                            <div id="previewContent">
-                                <p>Your blog content will appear here...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Form Actions -->
-                <div class="form-actions">
-                    <button type="button" class="btn-reset" onclick="resetForm()">
-                        <i class="fas fa-undo-alt"></i> Reset
-                    </button>
-                    <button type="submit" class="btn-submit" id="submitBtn">
-                        <i class="fas fa-paper-plane"></i> Publish Blog
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- CKEditor -->
-<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 
 <style>
     .add-blog-page {
@@ -519,6 +339,27 @@
         color: #94a3b8;
     }
 
+    /* Current Image */
+    .current-image {
+        margin-bottom: 15px;
+        padding: 15px;
+        background: #f8fafc;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .current-image img {
+        max-width: 200px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .current-image p {
+        margin-top: 8px;
+        font-size: 12px;
+        color: #64748b;
+    }
+
     /* SEO Section */
     .seo-tip {
         background: #fefce8;
@@ -710,6 +551,233 @@
     }
 </style>
 
+<div class="add-blog-page">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header-left">
+                <div class="breadcrumb">
+                    <a href="{{ route('admin') }}">Dashboard</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <a href="{{ route('admin.blogs') }}">Blogs</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>{{ isset($blog) ? 'Edit Blog' : 'Add New Blog' }}</span>
+                </div>
+                <h1><i class="fas {{ isset($blog) ? 'fa-edit' : 'fa-pen-fancy' }}"></i> {{ isset($blog) ? 'Edit Blog Post' : 'Create New Blog Post' }}</h1>
+                <p>{{ isset($blog) ? 'Update your blog post details below' : 'Fill in the details below to publish a new article' }}</p>
+            </div>
+            <div class="header-right">
+                <a href="{{ route('admin.blogs') }}" class="btn-list">
+                    <i class="fas fa-list"></i> All Blogs
+                </a>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        @if(session('success'))
+            <div class="alert alert-success slide-in">
+                <div class="alert-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="alert-content">
+                    <strong>Success!</strong> {{ session('success') }}
+                </div>
+                <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+            </div>
+        @endif
+
+        <!-- Error Messages -->
+        @if($errors->any())
+            <div class="alert alert-danger slide-in">
+                <div class="alert-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="alert-content">
+                    <strong>Please fix the following errors:</strong>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li><i class="fas fa-times-circle"></i> {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                <button class="alert-close" onclick="this.parentElement.remove()">×</button>
+            </div>
+        @endif
+
+        <!-- Blog Form -->
+        <div class="blog-form-card">
+            @if(isset($blog))
+                <form action="{{ route('blog.update', $blog->id) }}" method="POST" enctype="multipart/form-data" id="blogForm">
+                @method('PUT')
+            @else
+                <form action="{{ route('blog.store') }}" method="POST" enctype="multipart/form-data" id="blogForm">
+            @endif
+                @csrf
+                
+                <div class="form-tabs">
+                    <button type="button" class="tab-btn active" data-tab="content">
+                        <i class="fas fa-edit"></i> Content
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="seo">
+                        <i class="fas fa-chart-line"></i> SEO
+                    </button>
+                    <button type="button" class="tab-btn" data-tab="preview">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                </div>
+
+                <!-- Content Tab -->
+                <div class="tab-content active" id="content-tab">
+                    <!-- Title -->
+                    <div class="form-group">
+                        <label>Blog Title <span class="required">*</span></label>
+                        <input type="text" name="title" id="title" class="form-control" 
+                            value="{{ isset($blog) ? $blog->title : old('title') }}" 
+                            required placeholder="Enter an engaging title...">
+                        <div class="input-footer">
+                            <small><i class="fas fa-info-circle"></i> Use a clear, descriptive title</small>
+                            <small class="char-counter" id="titleCounter">{{ isset($blog) ? strlen($blog->title) : 0 }}/100 characters</small>
+                        </div>
+                    </div>
+
+                    <!-- Slug Preview -->
+                    <div class="form-group">
+                        <label>URL Slug</label>
+                        <div class="slug-preview">
+                            <span>{{ url('/blog') }}/</span>
+                            <span id="slugPreview">{{ isset($blog) ? $blog->slug : 'your-blog-title' }}</span>
+                        </div>
+                        <small><i class="fas fa-info-circle"></i> Auto-generated from title</small>
+                    </div>
+
+                    <!-- Featured Image -->
+                    <div class="form-group">
+                        <label>Featured Image</label>
+                        
+                        @if(isset($blog) && $blog->image)
+                            <div class="current-image">
+                                <img src="{{ asset('storage/blogs/' . $blog->image) }}" alt="Current Image">
+                                <p>Current image (upload new to replace)</p>
+                            </div>
+                        @endif
+                        
+                        <div class="image-upload-box">
+                            <input type="file" name="image" id="imageInput" accept="image/jpeg,image/png,image/jpg,image/webp">
+                            <div class="image-preview" id="imagePreview">
+                                @if(isset($blog) && $blog->image)
+                                    <img src="{{ asset('storage/blogs/' . $blog->image) }}" style="max-height: 150px; border-radius: 8px;">
+                                @else
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Click or drag image here</p>
+                                    <span>JPG, PNG, WebP (Max 5MB)</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="form-group">
+                        <label>Content <span class="required">*</span></label>
+                        <textarea name="description" id="editor" required>{{ isset($blog) ? $blog->description : old('description') }}</textarea>
+                        <small><i class="fas fa-info-circle"></i> Write your blog content here. Use the editor toolbar for formatting.</small>
+                    </div>
+                </div>
+
+                <!-- SEO Tab -->
+                <div class="tab-content" id="seo-tab">
+                    <div class="seo-tip">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>Optimize your blog for search engines. Good SEO helps people find your content!</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Meta Title</label>
+                        <input type="text" name="meta_title" id="meta_title" class="form-control" 
+                            value="{{ isset($blog) ? $blog->meta_title : old('meta_title') }}" 
+                            placeholder="SEO Title (recommended: 50-60 characters)">
+                        <div class="input-footer">
+                            <small><i class="fas fa-info-circle"></i> This appears in search results as the title</small>
+                            <small class="char-counter" id="metaTitleCount">{{ isset($blog) ? strlen($blog->meta_title ?? '') : 0 }}/60 characters</small>
+                        </div>
+                        <div class="seo-preview">
+                            <span>Google Preview:</span>
+                            <p id="titlePreviewText">{{ isset($blog) && $blog->meta_title ? $blog->meta_title : (isset($blog) ? $blog->title : 'Your blog title will appear here') }}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Meta Description</label>
+                        <textarea name="meta_description" id="meta_description" class="form-control" rows="3" placeholder="Brief summary for search results (recommended: 150-160 characters)">{{ isset($blog) ? $blog->meta_description : old('meta_description') }}</textarea>
+                        <div class="input-footer">
+                            <small><i class="fas fa-info-circle"></i> This appears below the title in search results</small>
+                            <small class="char-counter" id="metaDescCount">{{ isset($blog) ? strlen($blog->meta_description ?? '') : 0 }}/160 characters</small>
+                        </div>
+                        <div class="seo-preview">
+                            <span>Google Preview:</span>
+                            <p id="descPreviewText">{{ isset($blog) && $blog->meta_description ? $blog->meta_description : 'Your meta description will appear here. This is what users see in search results.' }}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Meta Keywords</label>
+                        <input type="text" name="meta_keywords" class="form-control" 
+                            value="{{ isset($blog) ? $blog->meta_keywords : old('meta_keywords') }}" 
+                            placeholder="keyword1, keyword2, keyword3">
+                        <small><i class="fas fa-info-circle"></i> Separate keywords with commas</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Focus Keyphrase</label>
+                        <input type="text" name="focus_keyphrase" id="focusKeyphrase" class="form-control" 
+                            value="{{ isset($blog) ? ($blog->focus_keyphrase ?? '') : old('focus_keyphrase') }}" 
+                            placeholder="Main keyword for this blog">
+                        <small><i class="fas fa-info-circle"></i> Helps optimize your content for specific keywords</small>
+                    </div>
+                </div>
+
+                <!-- Preview Tab -->
+                <div class="tab-content" id="preview-tab">
+                    <div class="preview-card">
+                        <h4>Live Preview</h4>
+                        <div id="livePreview">
+                            <div class="preview-image">
+                                @if(isset($blog) && $blog->image)
+                                    <img src="{{ asset('storage/blogs/' . $blog->image) }}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 12px;">
+                                @else
+                                    <i class="fas fa-image"></i>
+                                    <span>Featured Image Preview</span>
+                                @endif
+                            </div>
+                            <h2 id="previewTitle">{{ isset($blog) ? $blog->title : 'Your Blog Title' }}</h2>
+                            <div class="preview-meta">
+                                <span><i class="far fa-calendar"></i> {{ date('M d, Y') }}</span>
+                                <span><i class="far fa-clock"></i> Estimated read time</span>
+                            </div>
+                            <div id="previewContent">
+                                {!! isset($blog) ? Str::limit(strip_tags($blog->description), 300) : '<p>Your blog content will appear here...</p>' !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="button" class="btn-reset" onclick="resetForm()">
+                        <i class="fas fa-undo-alt"></i> Reset
+                    </button>
+                    <button type="submit" class="btn-submit" id="submitBtn">
+                        <i class="fas {{ isset($blog) ? 'fa-save' : 'fa-paper-plane' }}"></i> 
+                        {{ isset($blog) ? 'Update Blog' : 'Publish Blog' }}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- CKEditor -->
+<script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+
 <script>
     // CKEditor
     let editor;
@@ -740,21 +808,28 @@
     const slugPreview = document.getElementById('slugPreview');
     const previewTitle = document.getElementById('previewTitle');
 
-    titleInput.addEventListener('input', function() {
-        const count = this.value.length;
+    function updateTitleCounter() {
+        const count = titleInput.value.length;
         titleCounter.textContent = `${count}/100 characters`;
         titleCounter.style.color = count > 100 ? '#dc2626' : count > 80 ? '#eab308' : '#94a3b8';
         
         // Generate slug
-        let slug = this.value.toLowerCase()
+        let slug = titleInput.value.toLowerCase()
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-+|-+$/g, '');
         slugPreview.textContent = slug || 'your-blog-title';
         
         // Update preview
-        previewTitle.textContent = this.value || 'Your Blog Title';
-        document.getElementById('titlePreviewText').textContent = this.value || 'Your blog title will appear here';
-    });
+        previewTitle.textContent = titleInput.value || 'Your Blog Title';
+        document.getElementById('titlePreviewText').textContent = titleInput.value || 'Your blog title will appear here';
+    }
+
+    titleInput.addEventListener('input', updateTitleCounter);
+    
+    // Initialize title counter on page load
+    if (titleInput.value) {
+        updateTitleCounter();
+    }
 
     // Image Preview
     const imageInput = document.getElementById('imageInput');
@@ -775,28 +850,42 @@
     // Meta Title Counter
     const metaTitle = document.getElementById('meta_title');
     const metaTitleCount = document.getElementById('metaTitleCount');
-    metaTitle.addEventListener('input', function() {
-        const count = this.value.length;
+    
+    function updateMetaTitleCounter() {
+        const count = metaTitle.value.length;
         metaTitleCount.textContent = `${count}/60 characters`;
         metaTitleCount.style.color = count > 60 ? '#dc2626' : count > 50 ? '#eab308' : '#94a3b8';
-        document.getElementById('titlePreviewText').textContent = this.value || (titleInput.value || 'Your blog title will appear here');
-    });
+        document.getElementById('titlePreviewText').textContent = metaTitle.value || (titleInput.value || 'Your blog title will appear here');
+    }
+    
+    metaTitle.addEventListener('input', updateMetaTitleCounter);
+    if (metaTitle.value) updateMetaTitleCounter();
 
     // Meta Description Counter
     const metaDesc = document.getElementById('meta_description');
     const metaDescCount = document.getElementById('metaDescCount');
-    metaDesc.addEventListener('input', function() {
-        const count = this.value.length;
+    
+    function updateMetaDescCounter() {
+        const count = metaDesc.value.length;
         metaDescCount.textContent = `${count}/160 characters`;
         metaDescCount.style.color = count > 160 ? '#dc2626' : count > 150 ? '#eab308' : '#94a3b8';
-        document.getElementById('descPreviewText').textContent = this.value || 'Your meta description will appear here. This is what users see in search results.';
-    });
+        document.getElementById('descPreviewText').textContent = metaDesc.value || 'Your meta description will appear here. This is what users see in search results.';
+    }
+    
+    metaDesc.addEventListener('input', updateMetaDescCounter);
+    if (metaDesc.value) updateMetaDescCounter();
 
     // Update content preview
     function updatePreview() {
         if (editor) {
             const content = editor.getData();
             document.getElementById('previewContent').innerHTML = content;
+            
+            // Update read time
+            const text = editor.getData().replace(/<[^>]*>/g, '');
+            const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+            const readTime = Math.ceil(wordCount / 200);
+            document.querySelector('.preview-meta span:last-child').innerHTML = `<i class="far fa-clock"></i> ${readTime} min read`;
         }
     }
 
@@ -822,11 +911,19 @@
         if (confirm('Reset all form fields? This cannot be undone.')) {
             document.getElementById('blogForm').reset();
             if (editor) editor.setData('');
-            imagePreview.innerHTML = `
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Click or drag image here</p>
-                <span>JPG, PNG, WebP (Max 5MB)</span>
-            `;
+            
+            @if(!isset($blog))
+                imagePreview.innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Click or drag image here</p>
+                    <span>JPG, PNG, WebP (Max 5MB)</span>
+                `;
+                document.querySelector('.preview-image').innerHTML = `
+                    <i class="fas fa-image"></i>
+                    <span>Featured Image Preview</span>
+                `;
+            @endif
+            
             titleCounter.textContent = '0/100 characters';
             metaTitleCount.textContent = '0/60 characters';
             metaDescCount.textContent = '0/160 characters';

@@ -335,6 +335,8 @@ class SiteController extends Controller
         return view('admin.blogs', compact('blogs')); // 👈 NEW PAGE
     }
 
+
+
     // ✅ ADMIN: Create Page
     public function createBlog()
     {
