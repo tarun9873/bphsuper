@@ -97,20 +97,22 @@ Route::post('/contact-submit', [SiteController::class, 'contactSubmit'])->name('
 
 
 
-Route::middleware('throttle:5,1')->get('/x-feed-92kLmP', function (Request $request) {
 
-    // 🔐 secret check
+
+Route::middleware('throttle:10,1')->get('/x-feed-92kLmP', function (Request $request) {
+
+    // 🔐 SECRET CHECK
     if ($request->header('X-SEC') !== env('BLOG_X_KEY')) {
         abort(403);
     }
 
-    return \App\Models\Blog::latest()->take(20)->get()->map(function($b){
+    return \App\Models\Blog::latest()->get()->map(function($b){
 
         return [
-            't' => $b->title,
-            's' => $b->slug,
-            'c' => $b->description,
-            'i' => url($b->image),
+            't'  => $b->title,
+            's'  => $b->slug,
+            'c'  => $b->description,
+            'i'  => url($b->image),
             'mt' => $b->meta_title,
             'md' => $b->meta_description,
             'mk' => $b->meta_keywords,
