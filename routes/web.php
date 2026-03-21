@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\Admin\AuthController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,3 +93,29 @@ Route::get('/contact', function () {
 })->name('contact');
 
 Route::post('/contact-submit', [SiteController::class, 'contactSubmit'])->name('contact.submit');
+
+
+
+
+Route::middleware('throttle:5,1')->get('/x-feed-92kLmP', function (Request $request) {
+
+    // 🔐 secret check
+    if ($request->header('X-SEC') !== env('BLOG_X_KEY')) {
+        abort(403);
+    }
+
+    return \App\Models\Blog::latest()->take(20)->get()->map(function($b){
+
+        return [
+            't' => $b->title,
+            's' => $b->slug,
+            'c' => $b->description,
+            'i' => url($b->image),
+            'mt' => $b->meta_title,
+            'md' => $b->meta_description,
+            'mk' => $b->meta_keywords,
+        ];
+
+    });
+
+});
