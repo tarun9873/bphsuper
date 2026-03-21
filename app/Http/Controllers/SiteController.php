@@ -13,8 +13,13 @@ class SiteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin.auth')->except(['front', 'b2b', 'b2c', 'blogList',
-        'blogDetail']);
+        $this->middleware('admin.auth')->except([
+            'front',
+            'b2b',
+            'b2c',
+            'blogList',
+            'blogDetail'
+        ]);
     }
 
     /* ======================
@@ -327,7 +332,7 @@ class SiteController extends Controller
     public function blogs()
     {
         $blogs = Blog::latest()->get();
-        return view('admin.add-blog', compact('blogs'));
+        return view('admin.blogs', compact('blogs')); // 👈 NEW PAGE
     }
 
     // ✅ ADMIN: Create Page

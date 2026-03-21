@@ -76,9 +76,13 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
 
     Route::get('/blogs/edit/{id}', [SiteController::class, 'editBlog'])->name('blog.edit');
 
-    Route::post('/blog/update/{id}', [SiteController::class, 'updateBlog'])->name('blog.update');
+    // Route::post('/blog/update/{id}', [SiteController::class, 'updateBlog'])->name('blog.update');
+    Route::put('/blog/update/{id}', [SiteController::class, 'updateBlog'])->name('blog.update');
 
     Route::delete('/blog/delete/{id}', [SiteController::class, 'blogDelete'])->name('blog.delete');
+
+
+    
 });
 
 // Frontend Blog Routes
