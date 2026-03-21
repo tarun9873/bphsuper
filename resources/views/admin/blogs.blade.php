@@ -75,7 +75,7 @@
                             
                             <td class="col-image">
                                 @if($blog->image && file_exists(public_path('storage/blogs/' . $blog->image)))
-                                    <img src="{{ asset('storage/blogs/' . $blog->image) }}" alt="{{ $blog->title }}" class="blog-thumb">
+                                    <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}">
                                 @else
                                     <div class="no-image-icon">
                                         <i class="fas fa-image"></i>
