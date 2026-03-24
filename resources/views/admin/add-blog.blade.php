@@ -535,7 +535,6 @@
             text-align: center;
             padding: 12px;
         }
-        
         .tab-content {
             padding: 20px;
         }
@@ -543,14 +542,12 @@
         .form-actions {
             flex-direction: column;
         }
-        
         .btn-reset, .btn-submit {
             width: 100%;
             justify-content: center;
         }
     }
 </style>
-
 <div class="add-blog-page">
     <div class="container">
         <!-- Page Header -->

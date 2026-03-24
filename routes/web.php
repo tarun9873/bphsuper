@@ -96,6 +96,10 @@ Route::get('/contact', function () {
     return view('blog.contact'); // resources/views/contact.blade.php
 })->name('contact');
 
+Route::get('/get-panel', function () {
+    return view('getpanel'); // resources/views/contact.blade.php
+})->name('getpanel');
+
 Route::post('/contact-submit', [SiteController::class, 'contactSubmit'])->name('contact.submit');
 
 

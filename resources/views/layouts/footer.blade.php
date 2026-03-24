@@ -7,7 +7,7 @@
         <span>Home</span>
     </a>
 
-    <a href="https://walive.link/rustampanel" class="nav-item">
+    <a href="{{route('getpanel')}}" class="nav-item">
         <i class="fas fa-id-card nav-icon"></i>
         <span>Get Panels</span>
     </a>
