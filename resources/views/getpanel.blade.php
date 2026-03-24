@@ -55,8 +55,8 @@
 
 /* CONTAINER */
 .container {
-    max-width: 900px;
-    margin: auto;
+    /* max-width: 900px; */
+    /* margin: auto; */
     
 }
 
