@@ -6,11 +6,7 @@
 
 @section('meta_keywords','bph super panel provider, betting panel provider india, cricket betting panel, white label betting panel, admin panel betting, master panel betting, super master panel, agent panel provider, online betting id provider, b2b betting panel, b2c betting panel, betting software india')
 
-
-
 @section('content')
-
-
 
         <div class="marquee-container">
             <div class="marquee-wrapper">
@@ -273,7 +269,7 @@
                                     </div>
                                     <div class="button-row">
                                         <a href="{{ $site->url }}" target="_blank" class="visit-btn">Visit Website</a>
-                                        <a href="https://walive.link/rustampanel" target="_blank" class="get-id-btn-site">
+                                        <a href="https://wa-app.link/rustampanelsupport" target="_blank" class="get-id-btn-site">
                                             <i class="fas fa-id-card"></i> Get Panel
                                         </a>
                                     </div>
@@ -290,7 +286,5 @@
                 </section>
             </main>
         </div>
-
-      
 
 @endsection

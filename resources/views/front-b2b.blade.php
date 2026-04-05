@@ -83,7 +83,7 @@
             Visit Website
         </a>
 
-        <a href="https://walive.link/rustampanel"
+        <a href="https://wa-app.link/rustampanelsupport"
            target="_blank"
            class="get-id-btn-site">
            Get Panel

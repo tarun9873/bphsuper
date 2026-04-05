@@ -189,7 +189,7 @@ body{padding-bottom:80px;}
     <div class="hero">
         <h1>BPH Super Panel Provider in India</h1>
         <p>Start your own online gaming business with Admin, Master & White Label panel. Instant ID creation & full support available.</p>
-        <a href="https://walive.link/rustampanel" class="main-btn">Get Panel Now</a>
+        <a href="https://wa-app.link/rustampanelsupport" class="main-btn">Get Panel Now</a>
     </div>
 
 
@@ -247,7 +247,7 @@ body{padding-bottom:80px;}
     <div class="cta">
         <h3>Start Earning Today</h3>
         <p>Contact us now and activate your panel instantly.</p>
-        <a href="https://walive.link/rustampanel" class="main-btn" style="background:#000;">Join Now</a>
+        <a href="https://wa-app.link/rustampanelsupport" class="main-btn" style="background:#000;">Join Now</a>
     </div>
 
 

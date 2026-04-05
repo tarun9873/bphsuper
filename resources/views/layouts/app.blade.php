@@ -101,6 +101,7 @@ document.getElementById("globalSearch")?.addEventListener("keyup", function () {
     if(counter) counter.innerText = visibleCount;
 
 });
+
 </script>
 
 </body>

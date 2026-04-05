@@ -22,7 +22,7 @@
         <i class="fas fa-th-large nav-icon"></i>
         <span>All Panel</span>
     </a>
-    <a href="https://walive.link/rustampanelsupport" class="nav-item">
+    <a href="https://wa-app.link/rustampanelsupport" class="nav-item">
         <i class="fas fa-headset nav-icon"></i>
         <span>Support</span>
     </a>
@@ -43,7 +43,7 @@
     <div class="popup-social">
       <a href="https://t.me/bphpanel"><i class="fab fa-telegram"></i></a>
       <a href="https://www.instagram.com/bphsuper"><i class="fab fa-instagram"></i></a>
-      <a href="https://walive.link/rustampanelsupport"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://wa-app.link/rustampanelsupport"><i class="fab fa-whatsapp"></i></a>
     </div>
   </div>
 </div>

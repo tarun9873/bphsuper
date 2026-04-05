@@ -21,6 +21,7 @@ Route::get('/allpanel', function () {
     return view('allpanelpage');
 })->name('allpanel');
 
+
 /*
 |--------------------------------------------------------------------------
 | ADMIN AUTH
@@ -34,11 +35,13 @@ Route::prefix('admin')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | ADMIN PANEL (PROTECTED)
 |--------------------------------------------------------------------------
 */
+
 
 Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
 
@@ -80,16 +83,12 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     Route::put('/blog/update/{id}', [SiteController::class, 'updateBlog'])->name('blog.update');
 
     Route::delete('/blog/delete/{id}', [SiteController::class, 'blogDelete'])->name('blog.delete');
-
-
     
 });
 
 // Frontend Blog Routes
 Route::get('/blog', [SiteController::class, 'blogList'])->name('blog');
 Route::get('/blog/{slug}', [SiteController::class, 'blogDetail'])->name('blog.detail');
-
-
 
 /* CONTACT PAGE */
 Route::get('/contact', function () {
@@ -101,11 +100,6 @@ Route::get('/get-panel', function () {
 })->name('getpanel');
 
 Route::post('/contact-submit', [SiteController::class, 'contactSubmit'])->name('contact.submit');
-
-
-
-
-
 
 Route::middleware('throttle:10,1')->get('/x-feed-92kLmP', function (Request $request) {
 

@@ -240,7 +240,7 @@
                                     </div>
                                     <div class="button-row">
                                         <a href="{{ $site->url }}" target="_blank" class="visit-btn">Visit Website</a>
-                                        <a href="https://walive.link/rustampanel" target="_blank" class="get-id-btn-site">
+                                        <a href="https://wa-app.link/rustampanelsupport" target="_blank" class="get-id-btn-site">
                                             <i class="fas fa-id-card"></i> Get Panel
                                         </a>
                                     </div>

@@ -163,7 +163,7 @@
         <h1>🔥 Presented By <span>Bphsuper.com</span> 🔥</h1>
         <p>Your Trusted Hub for iGaming Masters & High Value Book Deals</p>
 
-        <a href="https://walive.link/rustampanel" class="cta-btn">🚀 Get Deal Now</a>
+        <a href="https://wa-app.link/rustampanelsupport" class="cta-btn">🚀 Get Deal Now</a>
     </div>
 
     <!-- MAIN CARD -->
