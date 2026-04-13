@@ -20,7 +20,7 @@
     </a>
     <a href="{{route('allpanel')}}"  class="nav-item">
         <i class="fas fa-th-large nav-icon"></i>
-        <span>All Panel</span>
+        <span>Services</span>
     </a>
     <a href="https://wa-app.link/rustampanelsupport" class="nav-item">
         <i class="fas fa-headset nav-icon"></i>

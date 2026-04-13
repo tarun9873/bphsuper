@@ -30,6 +30,17 @@
                             <!-- Slide 1 - Two Images Side by Side -->
                             <div class="swiper-slide">
                                 <!-- First Image -->
+                                 <div class="slide-image-container">
+                                    <img src="/img/bph-fesw4.jpeg" 
+                                         alt="Sports Betting Banner 1"
+                                         onerror="this.src='https://via.placeholder.com/800x250/1a1a2e/ffffff?text=BPH+SUPER+PANEL+1'">
+                                </div>
+                                 <div class="slide-image-container">
+                                    <img src="/img/bph-rsfd.jpeg" 
+                                         alt="Sports Betting Banner 1"
+                                         onerror="this.src='https://via.placeholder.com/800x250/1a1a2e/ffffff?text=BPH+SUPER+PANEL+1'">
+                                </div>
+
                                 <div class="slide-image-container">
                                     <img src="/img/012120.webp" 
                                          alt="Sports Betting Banner 1"
