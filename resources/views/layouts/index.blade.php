@@ -35,9 +35,10 @@
                                          alt="Sports Betting Banner 1"
                                          onerror="this.src='https://via.placeholder.com/800x250/1a1a2e/ffffff?text=BPH+SUPER+PANEL+1'">
                                 </div>
+
                                  <div class="slide-image-container">
                                     <img src="/img/bph-rsfd.jpeg" 
-                                         alt="Sports Betting Banner 1"
+                                         alt="Sports Betting Banner 12"
                                          onerror="this.src='https://via.placeholder.com/800x250/1a1a2e/ffffff?text=BPH+SUPER+PANEL+1'">
                                 </div>
 
