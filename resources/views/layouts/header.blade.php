@@ -54,7 +54,31 @@
             z-index: 1000;
             width: 100%;
         }
-        
+        /* Default (DESKTOP) → normal header */
+.header {
+    position: relative;
+}
+
+/* MOBILE pe hi sticky/fixed */
+@media (max-width: 768px) {
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+
+        animation: slideDown 0.4s ease;
+        transition: all 0.3s ease;
+    }
+
+    body {
+        padding-top: 170px; /* header height */
+    }
+}
+
+
+
         .header-content {
             max-width: 800px;
             margin: 0 auto;

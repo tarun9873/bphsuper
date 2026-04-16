@@ -35,9 +35,13 @@
                 <div class="image-slider">
                     <div class="swiper">
                         <div class="swiper-wrapper">
+
+                            
                             <!-- Slide 1 - Two Images Side by Side -->
                             <div class="swiper-slide">
                                 <!-- First Image -->
+
+                                
                                 <div class="slide-image-container">
                                     <img src="/img/012120.webp" 
                                          alt="Sports Betting Banner 1"
@@ -45,10 +49,10 @@
                                 </div>
                                 
                                 <!-- Second Image -->
-                                <div class="slide-image-container">
-                                    <img src="/img/748523.webp" 
-                                         alt="Sports Betting Banner 2"
-                                         onerror="this.src='https://via.placeholder.com/800x250/0c2461/ffffff?text=BPH+SUPER+PANEL+2'">
+                              <div class="slide-image-container">
+                                    <img src="/img/bph-fesw4.jpeg" 
+                                         alt="Sports Betting Banner 1"
+                                         onerror="this.src='https://via.placeholder.com/800x250/1a1a2e/ffffff?text=BPH+SUPER+PANEL+1'">
                                 </div>
                             </div>
                             

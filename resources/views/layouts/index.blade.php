@@ -161,7 +161,7 @@
 
             <!-- ===== RR PANEL PROVIDER SECTION ===== -->
             <section class="rr-panel-section">
-                <h2 class="rr-panel-title">BPH SUPER PANEL PROVIDER</h2>
+                <h2 class="rr-panel-title">BPHh SUPER PANEL PROVIDER</h2>
                 
                 <p class="rr-panel-description">
                     Get Your Admin, Master, Super Master, Agent Panel<br>

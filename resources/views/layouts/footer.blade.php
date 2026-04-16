@@ -14,9 +14,9 @@
 
 
 
-    <a href="https://www.fairplay1.app/" class="nav-item">
+    <a href="{{route('rentals.front')}}" class="nav-item">
         <i class="fas fa-play-circle nav-icon"></i>
-        <span>Inplay</span>
+        <span>Rental Site</span>
     </a>
     <a href="{{route('allpanel')}}"  class="nav-item">
         <i class="fas fa-th-large nav-icon"></i>
@@ -62,6 +62,7 @@ function closePopup(){
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
 <script>
 // Initialize Swiper

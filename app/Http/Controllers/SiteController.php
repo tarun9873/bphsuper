@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Rental;
+
 
 class SiteController extends Controller
 {
@@ -18,7 +20,8 @@ class SiteController extends Controller
             'b2b',
             'b2c',
             'blogList',
-            'blogDetail'
+            'blogDetail',
+            'rentalFront'
         ]);
     }
 
@@ -501,4 +504,104 @@ class SiteController extends Controller
 
         return view('blog.blog-detail', compact('blog', 'relatedBlogs'));
     }
-}
+
+
+
+    /* ================= RENTAL INDEX ================= */
+    public function rentalIndex()
+    {
+        $rentals = Rental::latest()->get();
+        return view('admin.rentals.index', compact('rentals'));
+    }
+
+    /* ================= CREATE PAGE ================= */
+    public function rentalCreate()
+    {
+        return view('admin.rentals.create');
+    }
+
+    /* ================= STORE ================= */
+    /* ================= STORE ================= */
+    public function rentalStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'type' => 'required'
+        ]);
+
+        $logoPath = null;
+
+        if ($request->hasFile('logo')) {
+
+            $file = $request->file('logo');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            $file->move(public_path('storage/logos'), $filename);
+
+            $logoPath = 'logos/' . $filename;
+        }
+
+        Rental::create([
+            'name' => $request->name,
+            'logo' => $logoPath,
+            'url' => $request->url,
+            'price' => $request->price,
+            'type' => $request->type   // ✅ only type
+        ]);
+
+        return redirect()->route('rentals.index')->with('success', 'Added');
+    }
+
+    public function rentalEdit($id)
+    {
+        $rental = Rental::findOrFail($id);
+        return view('admin.rentals.edit', compact('rental'));
+    }
+    /* ================= UPDATE ================= */
+    public function rentalUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'type' => 'required'
+        ]);
+
+        $rental = Rental::findOrFail($id);
+
+        $logoPath = $rental->logo;
+
+        if ($request->hasFile('logo')) {
+
+            $file = $request->file('logo');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+
+            $file->move(public_path('storage/logos'), $filename);
+
+            $logoPath = 'logos/' . $filename;
+        }
+
+        $rental->update([
+            'name' => $request->name,
+            'logo' => $logoPath,
+            'url' => $request->url,
+            'price' => $request->price,
+            'type' => $request->type
+        ]);
+
+        return redirect()->route('rentals.index')->with('success', 'Updated');
+    }
+
+    /* ================= DELETE ================= */
+    public function rentalDelete($id)
+    {
+        Rental::findOrFail($id)->delete();
+        return back()->with('success', 'Deleted');
+    }
+
+    public function rentalFront()
+    {
+        $rentals = Rental::latest()->get();
+        return view('rentals', compact('rentals'));
+    }
+};

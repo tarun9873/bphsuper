@@ -57,6 +57,39 @@
                 @endif
             </a>
 
+
+     <!-- RENTAL LIST -->
+<a href="{{ route('rentals.index') }}" 
+   class="flex items-center space-x-3 px-4 py-3 rounded-xl 
+   {{ request()->routeIs('rentals.index') ? 'bg-gradient-to-r from-primary-500/20 to-primary-500/5 border border-primary-500/30 text-primary-500' : 'text-gray-300 hover:text-white hover:bg-white/5' }} 
+   transition-all duration-300 group">
+    
+    <i class="fas fa-layer-group w-5 text-center"></i>
+    
+    <span class="font-medium">Rental Sites</span>
+    
+    @if(request()->routeIs('rentals.index'))
+        <span class="ml-auto w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+    @endif
+</a>
+
+<!-- ADD RENTAL -->
+<a href="{{ route('rentals.create') }}" 
+   class="flex items-center space-x-3 px-4 py-3 rounded-xl 
+   {{ request()->routeIs('rentals.create') ? 'bg-gradient-to-r from-primary-500/20 to-primary-500/5 border border-primary-500/30 text-primary-500' : 'text-gray-300 hover:text-white hover:bg-white/5' }} 
+   transition-all duration-300 group">
+    
+    <i class="fas fa-plus-circle w-5 text-center"></i>
+    
+    <span class="font-medium">Add Rental</span>
+    
+    @if(request()->routeIs('rentals.create'))
+        <span class="ml-auto w-2 h-2 bg-primary-500 rounded-full animate-pulse"></span>
+    @endif
+</a>
+     
+     
+    
              <!-- Sites Management Link -->
            <a href="{{ route('admin.contacts') }}" 
    class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('admin.contacts') ? 'bg-gradient-to-r from-primary-500/20 to-primary-500/5 border border-primary-500/30 text-primary-500' : 'text-gray-300 hover:text-white hover:bg-white/5' }} transition-all duration-300 group">

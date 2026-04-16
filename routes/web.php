@@ -70,7 +70,7 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
 
     Route::get('/contacts', [SiteController::class, 'contacts'])->name('admin.contacts');
 
-// blog route for admin panel
+    // blog route for admin panel
     Route::get('/blogs', [SiteController::class, 'blogs'])->name('admin.blogs');
 
     Route::get('/blog/create', [SiteController::class, 'createBlog'])->name('admin.blogs.create');
@@ -83,7 +83,23 @@ Route::middleware(['admin.auth'])->prefix('admin')->group(function () {
     Route::put('/blog/update/{id}', [SiteController::class, 'updateBlog'])->name('blog.update');
 
     Route::delete('/blog/delete/{id}', [SiteController::class, 'blogDelete'])->name('blog.delete');
-    
+
+
+
+
+    /* RENTAL SYSTEM */
+
+    Route::get('/rentals', [SiteController::class, 'rentalIndex'])->name('rentals.index');
+
+    Route::get('/rentals/create', [SiteController::class, 'rentalCreate'])->name('rentals.create');
+
+    Route::post('/rentals/store', [SiteController::class, 'rentalStore'])->name('rentals.store');
+
+    Route::get('/rentals/edit/{id}', [SiteController::class, 'rentalEdit'])->name('rentals.edit');
+
+    Route::put('/rentals/update/{id}', [SiteController::class, 'rentalUpdate'])->name('rentals.update');
+
+    Route::delete('/rentals/delete/{id}', [SiteController::class, 'rentalDelete'])->name('rentals.delete');
 });
 
 // Frontend Blog Routes
@@ -99,6 +115,8 @@ Route::get('/get-panel', function () {
     return view('getpanel'); // resources/views/contact.blade.php
 })->name('getpanel');
 
+Route::get('/rentals', [SiteController::class, 'rentalFront'])->name('rentals.front');
+
 Route::post('/contact-submit', [SiteController::class, 'contactSubmit'])->name('contact.submit');
 
 Route::middleware('throttle:10,1')->get('/x-feed-92kLmP', function (Request $request) {
@@ -108,7 +126,7 @@ Route::middleware('throttle:10,1')->get('/x-feed-92kLmP', function (Request $req
         abort(403);
     }
 
-    return \App\Models\Blog::latest()->get()->map(function($b){
+    return \App\Models\Blog::latest()->get()->map(function ($b) {
 
         return [
             't'  => $b->title,
@@ -119,7 +137,5 @@ Route::middleware('throttle:10,1')->get('/x-feed-92kLmP', function (Request $req
             'md' => $b->meta_description,
             'mk' => $b->meta_keywords,
         ];
-
     });
-
 });
